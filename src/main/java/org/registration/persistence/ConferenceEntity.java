@@ -2,6 +2,7 @@ package org.registration.persistence;
 
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -53,13 +55,10 @@ public class ConferenceEntity {
 	@Column(name="short_talks")
 	private boolean shortTalks;
 	
-	@OneToOne(mappedBy="conferenceEntity", cascade=CascadeType.ALL)
-	private FeeEntity feeEntity;	
+	@OneToMany(mappedBy="conferenceEntity", cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
+	private List<FeeEntity> feeEntities;	
 	
-	@ManyToMany
-	@JoinTable(name="conference_participant", schema = "registration", 
-					joinColumns = @JoinColumn(name="conference_id"),
-					inverseJoinColumns = @JoinColumn(name="participant_id"))
+	@OneToMany(mappedBy = "conference", cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})	
 	private Collection<ParticipantEntity> participants;
 	
 	@ManyToMany
@@ -149,12 +148,12 @@ public class ConferenceEntity {
 		this.shortTalks = shortTalks;
 	}
 
-	public FeeEntity getFeeEntity() {
-		return feeEntity;
+	public List<FeeEntity> getFeeEntities() {
+		return feeEntities;
 	}
 
-	public void setFeeEntity(FeeEntity feeEntity) {
-		this.feeEntity = feeEntity;
+	public void setFeeEntities(List<FeeEntity> feeEntities) {
+		this.feeEntities = feeEntities;
 	}
 
 	public Collection<ParticipantEntity> getParticipants() {

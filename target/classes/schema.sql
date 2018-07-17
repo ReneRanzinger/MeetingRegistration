@@ -65,21 +65,9 @@ CREATE TABLE IF NOT EXISTS registration.configuration (
   value varchar(256)
 );
 
-CREATE TABLE IF NOT EXISTS registration.conference_participant (
-  conference_id bigint NOT NULL REFERENCES registration.conference(conference_id),
-  participant_id bigint NOT NULL REFERENCES registration.participant(participant_id),
-  PRIMARY KEY (conference_id,participant_id)
-);
-
 CREATE TABLE IF NOT EXISTS registration.conference_promocode (
   conference_id bigint NOT NULL REFERENCES registration.conference(conference_id),
   promotion_code_id bigint NOT NULL REFERENCES registration.promotion_code(promotion_code_id),
   PRIMARY KEY (conference_id,promotion_code_id)
-);
-
-CREATE TABLE IF NOT EXISTS registration.participant_fee (
-  participant_id bigint NOT NULL REFERENCES registration.participant(participant_id),
-  fee_id bigint NOT NULL REFERENCES registration.fee(fee_id),
-  PRIMARY KEY (participant_id, fee_id)
 );
 

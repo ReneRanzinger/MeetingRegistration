@@ -3,6 +3,7 @@ package org.registration.persistence;
 import java.sql.Timestamp;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -24,11 +27,9 @@ public class ParticipantEntity {
     @SequenceGenerator(name="seq3", sequenceName="participant_seq", initialValue=1)
 	private Long participantId;
 	
-	@ManyToMany
-	@JoinTable(name="conference_participant", schema = "registration", 
-					joinColumns = @JoinColumn(name="participant_id"),
-					inverseJoinColumns = @JoinColumn(name="conference_id"))
-	private Collection<ConferenceEntity> conferences;
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
+	@JoinColumn(name="conference_id")
+	private ConferenceEntity conference;
 
 	@Column(name="first_name", nullable = false)
 	private String firstName;
@@ -63,11 +64,9 @@ public class ParticipantEntity {
 	@Column(name="promotion_code")
 	private String promotionCode;
 	
-	@ManyToMany
-	@JoinTable(name="participant_fee", 
-					joinColumns = @JoinColumn(name="participant_id"),
-					inverseJoinColumns = @JoinColumn(name="fee_id"))
-	private Collection<FeeEntity> fees;
+	@OneToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
+	@JoinColumn(name="participant_id")
+	private FeeEntity fee;
 	
 	@Column(name="comment")
 	private String comment;
@@ -275,20 +274,20 @@ public class ParticipantEntity {
 		this.considerTalk = considerTalk;
 	}
 
-	public Collection<ConferenceEntity> getConferences() {
-		return conferences;
+	public ConferenceEntity getConference() {
+		return conference;
 	}
 
-	public void setConferences(Collection<ConferenceEntity> conferences) {
-		this.conferences = conferences;
+	public void setConference(ConferenceEntity conference) {
+		this.conference = conference;
 	}
 
-	public Collection<FeeEntity> getFees() {
-		return fees;
+	public FeeEntity getFee() {
+		return fee;
 	}
 
-	public void setFees(Collection<FeeEntity> fees) {
-		this.fees = fees;
+	public void setFee(FeeEntity fee) {
+		this.fee = fee;
 	}
 
 	public String getAbstractFileName() {

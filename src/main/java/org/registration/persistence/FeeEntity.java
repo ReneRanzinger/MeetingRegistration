@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,9 +23,12 @@ public class FeeEntity {
 	private Long feeId;
 	
 	
-	@OneToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
+	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
 	@JoinColumn(name="conference_id")
 	private ConferenceEntity conferenceEntity;
+	
+	@OneToOne(mappedBy="fee",cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
+	private ParticipantEntity participant;
 	
 	@Column(name= "name", nullable = false)
 	private String name;
