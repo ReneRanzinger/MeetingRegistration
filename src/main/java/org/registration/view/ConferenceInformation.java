@@ -3,7 +3,7 @@ package org.registration.view;
 import java.util.Date;
 import java.util.HashMap;
 
-public class MeetingInformation {
+public class ConferenceInformation {
 
 	String conferenceCode;
 	Date registrationStart;
@@ -13,12 +13,12 @@ public class MeetingInformation {
 	HashMap<String,Double> Fees;
 	int statusCode;
 	
-	public MeetingInformation(String conferenceCode) {
+	public ConferenceInformation(String conferenceCode) {
 		super();
 		this.conferenceCode = conferenceCode;
 	}
 
-	public MeetingInformation() {
+	public ConferenceInformation() {
 		// TODO Auto-generated constructor stub
 	}
 

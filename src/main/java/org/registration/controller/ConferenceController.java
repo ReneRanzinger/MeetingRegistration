@@ -5,21 +5,21 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import org.registration.view.MeetingInformation;
+import org.registration.view.ConferenceInformation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/conference")
 public class ConferenceController {
 
 	
 	@GetMapping("/info/{conference_code}")
-	public MeetingInformation getConferenceInfo(@PathVariable String conference_code) {
+	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code) {
 		
-		MeetingInformation mi = new MeetingInformation(conference_code);
+		ConferenceInformation ci = new ConferenceInformation(conference_code);
 		Date registrationStart = new Date(), registrationEnd = new Date(), abstractEnd = new Date(), abstractStart = new Date();
 		
 		if (conference_code.equals(new String("A01"))) {		
@@ -39,10 +39,10 @@ public class ConferenceController {
 			 abstractEnd = new GregorianCalendar(2018, Calendar.SEPTEMBER, 25).getTime();
 		} 
 		
-		mi.setRegistrationStart(registrationStart);
-		mi.setRegistrationEnd(registrationEnd);
-		mi.setAbstractStart(abstractStart);
-		mi.setAbstractEnd(abstractEnd);
+		ci.setRegistrationStart(registrationStart);
+		ci.setRegistrationEnd(registrationEnd);
+		ci.setAbstractStart(abstractStart);
+		ci.setAbstractEnd(abstractEnd);
 		
 		HashMap<String,Double> fees = new HashMap<String,Double>();
 		
@@ -50,7 +50,7 @@ public class ConferenceController {
 		fees.put("UGA Employee Fee", 700.00);
 		fees.put("Federal Employee Fee", 500.00);
 		
-		mi.setFees(fees);
+		ci.setFees(fees);
 		
 		int statusCode=0;
 		
@@ -62,9 +62,9 @@ public class ConferenceController {
 			statusCode=0;
 		}
 		
-		mi.setStatusCode(statusCode);
+		ci.setStatusCode(statusCode);
 		
-		return mi;	
+		return ci;	
 	}
 	
 	@GetMapping("/hello")
