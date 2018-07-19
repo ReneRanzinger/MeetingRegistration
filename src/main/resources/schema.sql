@@ -1,4 +1,4 @@
-DROP SCHEMA registration CASCADE;
+DROP SCHEMA IF EXISTS registration CASCADE;
 
 CREATE SCHEMA IF NOT EXISTS registration AUTHORIZATION registration;
 
