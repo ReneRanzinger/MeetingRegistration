@@ -2,15 +2,16 @@ package org.registration.view;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class ConferenceInformation {
 
-	String conferenceCode;
-	Date registrationStart;
-	Date registrationEnd;
-	Date abstractStart;
-	Date abstractEnd;
-	HashMap<String,Double> Fees;
+	private String conferenceCode;
+	private Date registrationStart;
+	private Date registrationEnd;
+	private Date abstractStart;
+	private Date abstractEnd;
+	private List<FeeTypes> Fees;
 	int statusCode;
 	
 	public ConferenceInformation(String conferenceCode) {
@@ -62,11 +63,11 @@ public class ConferenceInformation {
 		this.abstractEnd = abstractEnd;
 	}
 
-	public HashMap<String, Double> getFees() {
+	public List<FeeTypes> getFees() {
 		return Fees;
 	}
 
-	public void setFees(HashMap<String, Double> fees) {
+	public void setFees(List<FeeTypes> fees) {
 		Fees = fees;
 	}
 
