@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.registration.persistence.FeeEntity;
+
 public class ConferenceInformation {
 
 	private String conferenceCode;
@@ -11,7 +13,7 @@ public class ConferenceInformation {
 	private Date registrationEnd;
 	private Date abstractStart;
 	private Date abstractEnd;
-	private List<FeeTypes> Fees;
+	private List<FeeType> Fees;
 	int statusCode;
 	
 	public ConferenceInformation(String conferenceCode) {
@@ -63,11 +65,11 @@ public class ConferenceInformation {
 		this.abstractEnd = abstractEnd;
 	}
 
-	public List<FeeTypes> getFees() {
+	public List<FeeType> getFees() {
 		return Fees;
 	}
 
-	public void setFees(List<FeeTypes> fees) {
+	public void setFees(List<FeeType> fees) {
 		Fees = fees;
 	}
 

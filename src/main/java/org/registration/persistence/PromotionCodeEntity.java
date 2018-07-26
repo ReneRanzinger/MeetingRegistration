@@ -20,7 +20,7 @@ public class PromotionCodeEntity {
 	@Id
     @Column(name="promotion_code_id", unique = true, nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq4")
-    @SequenceGenerator(name="seq4", sequenceName="promotion_code_seq", initialValue=1)
+    @SequenceGenerator(name="seq4", sequenceName="promotion_code_seq", initialValue=1, allocationSize=1)
 	private Long promotionCodeId;
 	
 	@ManyToMany

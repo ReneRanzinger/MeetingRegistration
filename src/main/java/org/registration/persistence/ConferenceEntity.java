@@ -25,7 +25,7 @@ public class ConferenceEntity {
 	@Id
     @Column(name="conference_id", unique = true, nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq1")
-    @SequenceGenerator(name="seq1", sequenceName="conference_seq", initialValue=1)
+    @SequenceGenerator(name="seq1", sequenceName="conference_seq", initialValue=1, allocationSize=1)
 	private Long conferenceId;
 	
 	@Column(name="conference_code", unique = true, nullable = false, length = 31)
@@ -34,7 +34,7 @@ public class ConferenceEntity {
 	@Column(name="conference_name", nullable = false, length = 255)
 	private String conferenceName;
 	
-	@Column(name="registratoin_start", nullable = false)
+	@Column(name="registration_start", nullable = false)
 	private Timestamp registrationStart;
 	
 	@Column(name="registration_end", nullable = false)

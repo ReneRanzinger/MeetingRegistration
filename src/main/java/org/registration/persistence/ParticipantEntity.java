@@ -24,7 +24,7 @@ public class ParticipantEntity {
 	@Id
     @Column(name="participant_id", unique = true, nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq3")
-    @SequenceGenerator(name="seq3", sequenceName="participant_seq", initialValue=1)
+    @SequenceGenerator(name="seq3", sequenceName="participant_seq", initialValue=1, allocationSize=1)
 	private Long participantId;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})

@@ -19,11 +19,11 @@ public class FeeEntity {
 	@Id
     @Column(name="fee_id", unique = true, nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq2")
-    @SequenceGenerator(name="seq2", sequenceName="fee_seq", initialValue=1)
+    @SequenceGenerator(name="seq2", sequenceName="fee_seq", initialValue=1, allocationSize=1)
 	private Long feeId;
 	
 	
-	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
+	@ManyToOne(cascade= {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
 	@JoinColumn(name="conference_id")
 	private ConferenceEntity conferenceEntity;
 	

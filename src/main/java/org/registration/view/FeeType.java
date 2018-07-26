@@ -1,11 +1,11 @@
 package org.registration.view;
 
-public class FeeTypes {
+public class FeeType {
 
 	private String name;
 	private double amount;
 	
-	public FeeTypes(String name, double amount) {		
+	public FeeType(String name, double amount) {		
 		this.name = name;
 		this.amount = amount;
 	}

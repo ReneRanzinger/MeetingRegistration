@@ -8,7 +8,7 @@ CREATE SEQUENCE IF NOT EXISTS participant_seq MINVALUE 1 START 1;
 CREATE SEQUENCE IF NOT EXISTS promotion_code_seq MINVALUE 1 START 1;
 
 CREATE TABLE IF NOT EXISTS registration.conference (
-  conference_id bigint DEFAULT nextval('conference_seq') NOT NULL PRIMARY KEY,
+  conference_id bigint NOT NULL PRIMARY KEY,
   conference_code varchar(32) NOT NULL,
   conference_name varchar(256) NOT NULL,
   registration_start timestamp without time zone NOT NULL,

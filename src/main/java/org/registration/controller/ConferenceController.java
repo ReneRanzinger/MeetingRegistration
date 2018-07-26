@@ -1,14 +1,20 @@
 package org.registration.controller;
 
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 
+import org.registration.persistence.ConferenceEntity;
+import org.registration.persistence.FeeEntity;
+import org.registration.service.ConferenceManager;
+import org.registration.service.FeeManager;
 import org.registration.view.ConferenceInformation;
-import org.registration.view.FeeTypes;
+import org.registration.view.FeeType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,61 +25,59 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/conference")
 public class ConferenceController {
 
+	@Autowired
+	ConferenceManager conferenceManager;
+	
+	@Autowired
+	FeeManager feeManager;
+	
 	@CrossOrigin
 	@GetMapping("/info/{conference_code}")
 	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code) {
 		
-		ConferenceInformation ci = new ConferenceInformation(conference_code);
-		Date registrationStart = new Date(), registrationEnd = new Date(), abstractEnd = new Date(), abstractStart = new Date();
-		
-		if (conference_code.equals(new String("A01"))) {
-			registrationStart = new GregorianCalendar(2018, Calendar.JUNE, 1).getTime();
-			 registrationEnd =new GregorianCalendar(2018, Calendar.JUNE, 30).getTime();
-			 abstractStart = new GregorianCalendar(2018, Calendar.JUNE, 15).getTime();
-			 abstractEnd = new GregorianCalendar(2018, Calendar.JUNE, 25).getTime();
-		} else if (conference_code.equals(new String("A02"))) {		
-		 registrationStart = new GregorianCalendar(2018, Calendar.JULY, 1).getTime();
-		 registrationEnd =new GregorianCalendar(2018, Calendar.JULY, 31).getTime();
-		 abstractStart = new GregorianCalendar(2018, Calendar.JULY, 15).getTime();
-		 abstractEnd = new GregorianCalendar(2018, Calendar.JULY, 25).getTime();
-		}else if (conference_code.equals(new String("A03"))) {
-			registrationStart = new GregorianCalendar(2018, Calendar.AUGUST, 1).getTime();
-			 registrationEnd =new GregorianCalendar(2018, Calendar.AUGUST, 31).getTime();
-			 abstractStart = new GregorianCalendar(2018, Calendar.AUGUST, 15).getTime();
-			 abstractEnd = new GregorianCalendar(2018, Calendar.AUGUST, 25).getTime();
+		ConferenceEntity ce;
+		try {
+				
+			ce = conferenceManager.findByConferenceCode(conference_code);
+			
+		}catch(Exception e) {
+			
+			return null;
 		}
 		
-		ci.setRegistrationStart(registrationStart);
-		ci.setRegistrationEnd(registrationEnd);
-		ci.setAbstractStart(abstractStart);
-		ci.setAbstractEnd(abstractEnd);
+		ConferenceInformation ci = new ConferenceInformation(conference_code);
 		
-		List<FeeTypes> fees = new ArrayList<FeeTypes>();
+		ci.setRegistrationStart(ce.getRegistrationStart());
+		ci.setRegistrationEnd(ce.getRegistrationEnd());
+		ci.setAbstractEnd(ce.getAbstractEnd());
+		ci.setAbstractStart(ce.getAbstractStart());
 		
-		FeeTypes f1 = new FeeTypes("Standard Fee",1000.0);
-		FeeTypes f2 = new FeeTypes("UGA Employee Fee",700.0);
-		FeeTypes f3 = new FeeTypes("Federal Employee Fee",500.0);
-			
-		fees.add(f3);
-		fees.add(f2);
-		fees.add(f1);
+		List<FeeType> fees = new ArrayList<FeeType>();
+		
+		List<FeeEntity> feeEntities = feeManager.findByConferenceCode(conference_code);
+		
+		for (FeeEntity fe : feeEntities) {
+			FeeType temp = new FeeType(fe.getName(), fe.getAmount());
+			fees.add(temp);
+		}
 		
 		ci.setFees(fees);
 		
-		int statusCode=0;
+		int statusCode = 0;
 		
-		if(new Date().compareTo(registrationStart) < 0) {
+		if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationStart()) < 0) {
 			statusCode=1;
-		} else if(new Date().compareTo(registrationEnd) > 0) {
+		} else if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationEnd()) > 0) {
 			statusCode=-1;
-		} else if (new Date().compareTo(registrationStart) >= 0 || new Date().compareTo(registrationEnd) <= 0) {
+		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationStart()) >= 0 && new Date().compareTo(ce.getRegistrationEnd()) <= 0) {
 			statusCode=0;
 		}
 		
 		ci.setStatusCode(statusCode);
 		
-		return ci;	
+		return ci;
+		
 	}
-	
+
 	
 }
