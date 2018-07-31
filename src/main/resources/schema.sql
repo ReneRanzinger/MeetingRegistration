@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS registration.promotion_code (
   promotion_code_id bigint DEFAULT nextval('promotion_code_seq') NOT NULL PRIMARY KEY,
   conference_id bigint NOT NULL REFERENCES registration.conference(conference_id),
   code varchar(32) NOT NULL,
-  description varchar(1024) NOT NULL
-  UNIQUE (promotion_code_id,conference_id);
+  description varchar(1024) NOT NULL,
+  UNIQUE (promotion_code_id,conference_id)
 );
 
 CREATE TABLE IF NOT EXISTS registration.configuration (
