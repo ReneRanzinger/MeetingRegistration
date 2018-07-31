@@ -60,9 +60,9 @@ private void addAllConferences() {
 		ConferenceEntity c2 = new ConferenceEntity();
 		
 		registrationStart = new Timestamp(df.parse("07/01/2018").getTime());
-		registrationEnd = new Timestamp(df.parse("07/30/2018").getTime());
+		registrationEnd = new Timestamp(df.parse("08/30/2018").getTime());
 		abstractStart = new Timestamp(df.parse("07/15/2018").getTime());
-		abstractEnd = new Timestamp(df.parse("07/25/2018").getTime());
+		abstractEnd = new Timestamp(df.parse("08/25/2018").getTime());
 		
 		c2.setConferenceCode("A02");
 		c2.setConferenceName("UGA conference 02");
@@ -78,10 +78,10 @@ private void addAllConferences() {
 		
 		ConferenceEntity c3 = new ConferenceEntity();
 		
-		registrationStart = new Timestamp(df.parse("08/01/2018").getTime());
-		registrationEnd = new Timestamp(df.parse("08/30/2018").getTime());
-		abstractStart = new Timestamp(df.parse("08/15/2018").getTime());
-		abstractEnd = new Timestamp(df.parse("08/25/2018").getTime());
+		registrationStart = new Timestamp(df.parse("09/01/2018").getTime());
+		registrationEnd = new Timestamp(df.parse("09/30/2018").getTime());
+		abstractStart = new Timestamp(df.parse("09/15/2018").getTime());
+		abstractEnd = new Timestamp(df.parse("09/25/2018").getTime());
 		
 		c3.setConferenceCode("A03");
 		c3.setConferenceName("UGA conference 03");
