@@ -110,6 +110,14 @@ public class Participant {
 	public void setDiet(String diet) {
 		this.diet = diet;
 	}
+	@Override
+	public String toString() {
+		return "Participant [conferenceCode=" + conferenceCode + ", title=" + title + ", firstName=" + firstName
+				+ ", middleName=" + middleName + ", lastName=" + lastName + ", department=" + department
+				+ ", institution=" + institution + ", email=" + email + ", address=" + address + ", phone=" + phone
+				+ ", profession=" + profession + ", promotionCode=" + promotionCode + ", fee=" + fee + ", comment="
+				+ comment + ", diet=" + diet + "]";
+	}
 	
 	
 	

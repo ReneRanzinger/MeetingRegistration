@@ -35,6 +35,8 @@ public class RegistrationController {
     		consumes={"application/xml", "application/json"})
 	public Confirmation register(@RequestBody(required=true) Participant p) {
 		
+			System.out.println(p);
+		
 		try {
 			ParticipantEntity newParticipant = new ParticipantEntity(); 
 			newParticipant.setConference(conferenceManager.findByConferenceCode(p.getConferenceCode()));

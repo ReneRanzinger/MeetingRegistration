@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS registration.fee (
 CREATE TABLE IF NOT EXISTS registration.participant (
   participant_id bigint DEFAULT nextval('participant_seq') NOT NULL PRIMARY KEY,
   conference_id bigint NOT NULL REFERENCES registration.conference(conference_id),
+  title varchar(128) NOT NULL,
   first_name varchar(128) NOT NULL,
   middle_name varchar(128),  
   last_name varchar(128) NOT NULL,
@@ -38,7 +39,6 @@ CREATE TABLE IF NOT EXISTS registration.participant (
   email varchar(128) NOT NULL,
   address text,
   phone varchar(128) NOT NULL,
-  title varchar(128) NOT NULL,
   profession varchar(128) NOT NULL,
   promotion_code varchar(32) NOT NULL,
   fee_id bigint NOT NULL REFERENCES registration.fee(fee_id),
@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS registration.promotion_code (
   conference_id bigint NOT NULL REFERENCES registration.conference(conference_id),
   code varchar(32) NOT NULL,
   description varchar(1024) NOT NULL
+  UNIQUE (promotion_code_id,conference_id);
 );
 
 CREATE TABLE IF NOT EXISTS registration.configuration (

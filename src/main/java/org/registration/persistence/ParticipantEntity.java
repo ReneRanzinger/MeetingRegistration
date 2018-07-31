@@ -31,6 +31,9 @@ public class ParticipantEntity {
 	@JoinColumn(name="conference_id")
 	private ConferenceEntity conference;
 
+	@Column(name="title", nullable = false)
+	private String title;
+	
 	@Column(name="first_name", nullable = false)
 	private String firstName;
 	
@@ -54,9 +57,6 @@ public class ParticipantEntity {
 	
 	@Column(name="phone", nullable = false)
 	private String phone;
-	
-	@Column(name="title", nullable = false)
-	private String title;
 	
 	@Column(name="profession", nullable = false)
 	private String profession;
