@@ -16,7 +16,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter  {
 		RequestMatcher PUBLIC_URLS = new OrRequestMatcher( 
 				new AntPathRequestMatcher("/error"),
 				new AntPathRequestMatcher("/conference/info/**"),
-				new AntPathRequestMatcher("/conference/registration/**"));
+				new AntPathRequestMatcher("/registration/**"));
 		
 		http.cors().and().authorizeRequests()
 		    .requestMatchers(PUBLIC_URLS).permitAll()

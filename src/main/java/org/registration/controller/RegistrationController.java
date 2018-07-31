@@ -13,6 +13,7 @@ import org.registration.view.Confirmation;
 import org.registration.view.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,7 @@ public class RegistrationController {
 	@Autowired
 	FeeManager feeManager;
 	
+	@CrossOrigin
 	@RequestMapping(value = "/register", method = RequestMethod.POST, 
     		consumes={"application/xml", "application/json"})
 	public Confirmation register(@RequestBody(required=true) Participant p) {
