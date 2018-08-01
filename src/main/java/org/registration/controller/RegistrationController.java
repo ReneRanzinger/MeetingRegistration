@@ -32,7 +32,6 @@ public class RegistrationController {
 	@Autowired
 	FeeManager feeManager;
 	
-	@CrossOrigin
 	@RequestMapping(value = "/register", method = RequestMethod.POST, 
     		consumes={"application/xml", "application/json"})
 	public Confirmation register(@RequestBody(required=true) Participant p) {

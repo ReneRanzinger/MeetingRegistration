@@ -31,7 +31,6 @@ public class ConferenceController {
 	@Autowired
 	FeeManager feeManager;
 	
-	@CrossOrigin
 	@GetMapping("/info/{conference_code}")
 	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code) {
 		
