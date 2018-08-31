@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,11 +24,9 @@ public class PromotionCodeEntity {
     @SequenceGenerator(name="seq4", sequenceName="promotion_code_seq", initialValue=1, allocationSize=1)
 	private Long promotionCodeId;
 	
-	@ManyToMany
-	@JoinTable(name="conference_promocode", schema = "registration", 
-					joinColumns = @JoinColumn(name="promo_code_id"),
-					inverseJoinColumns = @JoinColumn(name="conference_id"))
-	private Collection<ConferenceEntity> conferences;
+	@ManyToOne
+	@JoinColumn(name="conference_id")
+	private ConferenceEntity conference;
 	
 	
 	private String code;
@@ -67,12 +66,12 @@ public class PromotionCodeEntity {
 		this.description = description;
 	}
 
-	public Collection<ConferenceEntity> getConferences() {
-		return conferences;
+	public ConferenceEntity getConference() {
+		return conference;
 	}
 
-	public void setConferences(Collection<ConferenceEntity> conferences) {
-		this.conferences = conferences;
+	public void setConference(ConferenceEntity conference) {
+		this.conference = conference;
 	}
 	
 	

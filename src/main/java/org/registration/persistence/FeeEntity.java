@@ -22,13 +22,9 @@ public class FeeEntity {
     @SequenceGenerator(name="seq2", sequenceName="fee_seq", initialValue=1, allocationSize=1)
 	private Long feeId;
 	
-	
 	@ManyToOne(cascade= {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
 	@JoinColumn(name="conference_id")
 	private ConferenceEntity conferenceEntity;
-	
-	@OneToOne(mappedBy="fee",cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
-	private ParticipantEntity participant;
 	
 	@Column(name= "name", nullable = false)
 	private String name;

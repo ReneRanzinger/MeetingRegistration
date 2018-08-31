@@ -4,6 +4,6 @@ import org.registration.persistence.ParticipantEntity;
 
 public interface ParticipantManager {
 
-	void addParticipant(ParticipantEntity newParticipant);
+	void createParticipant(ParticipantEntity newParticipant);
 	
 }

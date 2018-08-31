@@ -12,9 +12,8 @@ public class ParticipantManagerImpl implements ParticipantManager {
 
 	@Autowired
 	ParticipantRepository repository;
-	
-	@Override
-	public void addParticipant(ParticipantEntity newParticipant) {
+		
+	public void createParticipant(ParticipantEntity newParticipant) {
 		repository.save(newParticipant);
 	}
 

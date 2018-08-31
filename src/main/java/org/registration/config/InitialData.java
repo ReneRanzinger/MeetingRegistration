@@ -52,6 +52,7 @@ private void addAllConferences() {
 		c1.setAbstractStart(abstractStart);
 		c1.setAbstractEnd(abstractEnd);
 		c1.setPostRegistrationCode("CONFIRM");
+		c1.setEmailList("vj21381@uga.edu");
 		c1.setConfirmationEmail("Your registration is confirm for UGA conference 01 conference");
 		c1.setShortTalks(true);	
 		
@@ -71,6 +72,7 @@ private void addAllConferences() {
 		c2.setAbstractStart(abstractStart);
 		c2.setAbstractEnd(abstractEnd);
 		c2.setPostRegistrationCode("CONFIRM");
+		c2.setEmailList("vj21381@uga.edu");
 		c2.setConfirmationEmail("Your registration is confirm for UGA conference 02 conference");
 		c2.setShortTalks(false);	
 		
@@ -90,6 +92,7 @@ private void addAllConferences() {
 		c3.setAbstractStart(abstractStart);
 		c3.setAbstractEnd(abstractEnd);
 		c3.setPostRegistrationCode("CONFIRM");
+		c3.setEmailList("vj21381@uga.edu");
 		c3.setConfirmationEmail("Your registration is confirm for UGA conference 03 conference");
 		c3.setShortTalks(false);	
 		

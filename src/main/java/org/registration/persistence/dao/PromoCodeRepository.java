@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PromoCodeRepository extends JpaRepository<PromotionCodeEntity, Long> {
 
-	public PromotionCodeEntity findByCodeAndConferences(String code, ConferenceEntity conference);
+	public PromotionCodeEntity findByCodeAndConference(String code, ConferenceEntity conference);
 	
 }

@@ -4,19 +4,20 @@ CREATE SCHEMA IF NOT EXISTS registration AUTHORIZATION registration;
 
 CREATE SEQUENCE IF NOT EXISTS conference_seq MINVALUE 1 START 1;
 CREATE SEQUENCE IF NOT EXISTS fee_seq MINVALUE 1 START 1;
-CREATE SEQUENCE IF NOT EXISTS participant_seq MINVALUE 1 START 1;
+CREATE SEQUENCE IF NOT EXISTS participant_seq MINVALUE 550011 START 550011;
 CREATE SEQUENCE IF NOT EXISTS promotion_code_seq MINVALUE 1 START 1;
 
 CREATE TABLE IF NOT EXISTS registration.conference (
-  conference_id bigint NOT NULL PRIMARY KEY,
+  conference_id bigint DEFAULT nextval('conference_seq') NOT NULL PRIMARY KEY,
   conference_code varchar(32) NOT NULL,
   conference_name varchar(256) NOT NULL,
   registration_start timestamp without time zone NOT NULL,
   registration_end timestamp without time zone NOT NULL,
   abstract_start timestamp without time zone NOT NULL,
   abstract_end timestamp without time zone NOT NULL,
-  post_registration_code varchar(32) NOT NULL,
-  confirmation_email text,
+  post_registration_code varchar(32),
+  email_list	text,
+  confirmation_email text NOT NULL,
   short_talks boolean
 );
 
@@ -24,7 +25,8 @@ CREATE TABLE IF NOT EXISTS registration.fee (
   fee_id bigint DEFAULT nextval('fee_seq') NOT NULL PRIMARY KEY,
   conference_id bigint REFERENCES registration.conference(conference_id), 
   name varchar(64) NOT NULL,
-  amount double precision
+  amount double precision NOT NULL,
+  UNIQUE (name,conference_id)
 );
 
 CREATE TABLE IF NOT EXISTS registration.participant (
@@ -40,16 +42,17 @@ CREATE TABLE IF NOT EXISTS registration.participant (
   address text,
   phone varchar(128) NOT NULL,
   profession varchar(128) NOT NULL,
-  promotion_code varchar(32) NOT NULL,
+  promotion_code varchar(32),
   fee_id bigint NOT NULL REFERENCES registration.fee(fee_id),
+  diet varchar(124),
   comment text,
   registration_time timestamp without time zone NOT NULL,
   payed boolean NOT NULL,
   abstract_title varchar(1024),
   abstract bytea,
-  diet varchar(124) NOT NULL,
   abstract_filename varchar(10000),
-  consider_talk boolean
+  consider_talk boolean,
+  UNIQUE (email,conference_id)
 );  
 
 

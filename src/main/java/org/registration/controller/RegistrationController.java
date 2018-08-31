@@ -2,18 +2,22 @@ package org.registration.controller;
 
 import java.sql.Timestamp;
 
+import javax.persistence.EntityExistsException;
+
+import org.registration.exception.EmailExistsException;
+import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.FeeEntity;
 import org.registration.persistence.ParticipantEntity;
-import org.registration.persistence.dao.ConferenceRepository;
-import org.registration.persistence.dao.FeeRepository;
+import org.registration.persistence.dao.ParticipantRepository;
 import org.registration.service.ConferenceManager;
+import org.registration.service.EmailManager;
 import org.registration.service.FeeManager;
 import org.registration.service.ParticipantManager;
 import org.registration.view.Confirmation;
 import org.registration.view.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.mail.MailSendException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +36,12 @@ public class RegistrationController {
 	@Autowired
 	FeeManager feeManager;
 	
+	@Autowired
+	ParticipantRepository participantRepositoy;
+	
+	@Autowired
+	EmailManager emailManager;
+	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, 
     		consumes={"application/xml", "application/json"})
 	public Confirmation register(@RequestBody(required=true) Participant p) {
@@ -40,38 +50,54 @@ public class RegistrationController {
 		
 		try {
 			ParticipantEntity newParticipant = new ParticipantEntity(); 
-			newParticipant.setConference(conferenceManager.findByConferenceCode(p.getConferenceCode()));
-			newParticipant.setFirstName(p.getFirstName());
-			newParticipant.setMiddleName(p.getMiddleName());
-			newParticipant.setLastName(p.getLastName());
-			newParticipant.setAddress(p.getAddress());
-			newParticipant.setDepartment(p.getDepartment());
-			newParticipant.setInstitution(p.getInstitution());
-			newParticipant.setEmail(p.getEmail());
-			newParticipant.setPhone(p.getPhone());
-			newParticipant.setTitle(p.getTitle());
-			newParticipant.setProfession(p.getProfession());
-			newParticipant.setPromotionCode(p.getPromotionCode());
-			
-			FeeEntity fe = feeManager.findByNameAndConferenceEntity(p.getFee().getName(), conferenceManager.findByConferenceCode(p.getConferenceCode()));
+			ConferenceEntity ce = conferenceManager.findByConferenceCode(p.getConferenceCode());
+			newParticipant.setConference(ce);
+			newParticipant.setFirstName(p.getFirstName().trim());
+			newParticipant.setMiddleName(p.getMiddleName().trim());
+			newParticipant.setLastName(p.getLastName().trim());
+			newParticipant.setAddress(p.getAddress().trim());
+			newParticipant.setDepartment(p.getDepartment().trim());
+			newParticipant.setInstitution(p.getInstitution().trim());
+			newParticipant.setEmail(p.getEmail().toLowerCase());
+			newParticipant.setPhone(p.getPhone().trim());
+			newParticipant.setTitle(p.getTitle().trim());
+			newParticipant.setProfession(p.getProfession().trim());
+			newParticipant.setPromotionCode(p.getPromotionCode().trim());
+			String feeName = p.getFee().getName().trim();
+			FeeEntity fe = feeManager.findByNameAndConferenceEntity(feeName, ce);
 						
 			newParticipant.setFee(fe);
-			newParticipant.setComment(p.getComment());
+			newParticipant.setComment(p.getComment().trim());
 			newParticipant.setRegistrationTime(new Timestamp(System.currentTimeMillis()));
 			newParticipant.setPayed(false);
-			newParticipant.setDiet(p.getDiet());
+			newParticipant.setDiet(p.getDiet().trim());
 			
-			participantManager.addParticipant(newParticipant);
+			ParticipantEntity existing = participantRepositoy.findByFirstNameAndMiddleNameAndLastNameAndConference(p.getFirstName(), p.getMiddleName(), p.getLastName(), ce);
+			if (existing != null) {
+				throw new EntityExistsException ("This user " + p.getFirstName() +" "+ p.getMiddleName() +" "+ p.getLastName() + " already exists for conference! "+ce.getConferenceCode());
+			}
 			
+			existing = participantRepositoy.findByEmailAndConference(p.getEmail().toLowerCase(), ce);
+			
+			if (existing != null) {
+				throw new EmailExistsException ("There is already a registered participant with this email: " + p.getEmail());
+			}
+			
+			participantManager.createParticipant(newParticipant);
+			
+			try {
+	        	emailManager.sendConfirmationEmail(newParticipant);
+	        } catch (MailSendException e) {
+	        	// email cannot be sent, remove the participant
+	        	//participantRepositoy.delete(newParticipant);
+	        	throw e;
+	        }
 			
 			return new Confirmation("User added successfully", HttpStatus.CREATED.value());
 		} catch (Exception e) {
-			return new Confirmation("User added successfully", HttpStatus.CREATED.value());
+			return new Confirmation("USER not added", HttpStatus.EXPECTATION_FAILED.value());
 		}
-		
-		
-		
-		
+				
 	}
 	
 	

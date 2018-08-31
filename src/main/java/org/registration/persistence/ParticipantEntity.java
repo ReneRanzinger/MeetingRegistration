@@ -24,7 +24,7 @@ public class ParticipantEntity {
 	@Id
     @Column(name="participant_id", unique = true, nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq3")
-    @SequenceGenerator(name="seq3", sequenceName="participant_seq", initialValue=1, allocationSize=1)
+    @SequenceGenerator(name="seq3", sequenceName="participant_seq", initialValue=550011, allocationSize=1)
 	private Long participantId;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
@@ -65,7 +65,7 @@ public class ParticipantEntity {
 	private String promotionCode;
 	
 	@OneToOne(cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
-	@JoinColumn(name="participant_id")
+	@JoinColumn(name="fee_id")
 	private FeeEntity fee;
 	
 	@Column(name="comment")
@@ -81,9 +81,9 @@ public class ParticipantEntity {
 	private String abstractTitle;
 	
 	@Column(name="abstract")
-	private byte abstrct;
+	private byte[] abstrct;
 	
-	@Column(name="diet", nullable = false)
+	@Column(name="diet")
 	private String diet;
 	
 	@Column(name="abstract_filename")
@@ -99,7 +99,7 @@ public class ParticipantEntity {
 	public ParticipantEntity(String firstName, String middleName, String lastName, String department,
 			String institution, String email, String address, String phone, String title, String profession,
 			String promotionCode, String comment, Timestamp registrationTime, boolean payed,
-			String abstractTitle, byte abstrct, String diet, String abstract_fileName, boolean considerTalk) {
+			String abstractTitle, byte[] abstrct, String diet, String abstract_fileName, boolean considerTalk) {
 		
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -250,11 +250,11 @@ public class ParticipantEntity {
 		this.abstractTitle = abstractTitle;
 	}
 
-	public byte getAbstrct() {
+	public byte[] getAbstrct() {
 		return abstrct;
 	}
 
-	public void setAbstrct(byte abstrct) {
+	public void setAbstrct(byte[] abstrct) {
 		this.abstrct = abstrct;
 	}
 

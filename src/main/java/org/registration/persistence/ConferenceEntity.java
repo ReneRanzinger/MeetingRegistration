@@ -10,11 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -46,8 +42,11 @@ public class ConferenceEntity {
 	@Column(name="abstract_end", nullable = false)
 	private Timestamp abstractEnd;
 	
-	@Column(name="post_registration_code", nullable = false, length = 31)
+	@Column(name="post_registration_code", length = 31)
 	private String postRegistrationCode;
+	
+	@Column(name="email_list")
+	private String emailList;
 	
 	@Column(name="confirmation_email", nullable = false)
 	private String confirmationEmail;
@@ -61,11 +60,8 @@ public class ConferenceEntity {
 	@OneToMany(mappedBy = "conference", cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})	
 	private Collection<ParticipantEntity> participants;
 	
-	@ManyToMany
-	@JoinTable(name="conference_promocode", schema = "registration", 
-					joinColumns = @JoinColumn(name="conference_id"),
-					inverseJoinColumns = @JoinColumn(name="promo_code_id"))
-	private Collection<PromotionCodeEntity> promoCodes;
+	@OneToMany(mappedBy="conference", cascade = CascadeType.ALL)
+	private List<PromotionCodeEntity> promoCodes;
 	
 	
 	public ConferenceEntity() {
@@ -164,12 +160,20 @@ public class ConferenceEntity {
 		this.participants = participants;
 	}
 
-	public Collection<PromotionCodeEntity> getPromoCodes() {
+	public List<PromotionCodeEntity> getPromoCodes() {
 		return promoCodes;
 	}
 
-	public void setPromoCodes(Collection<PromotionCodeEntity> promoCodes) {
+	public void setPromoCodes(List<PromotionCodeEntity> promoCodes) {
 		this.promoCodes = promoCodes;
+	}
+
+	public String getEmailList() {
+		return emailList;
+	}
+
+	public void setEmailList(String emailList) {
+		this.emailList = emailList;
 	}
 	
 }
