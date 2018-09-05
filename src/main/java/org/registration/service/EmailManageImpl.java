@@ -51,6 +51,8 @@ public class EmailManageImpl implements EmailManager {
         message.setSubject("Registration Confirmed"); 
         message.setText("Hello " + participant.getFirstName() + "," +
         		"\n\n" + participant.getConference().getConfirmationEmail() +
+        		"\n\nConfirmation number: " + participant.getParticipantId() +
+        		"\n\nRegistered email: " + participant.getParticipantId() +
         		"\n\nThank you");
         message.setFrom(this.username);
         

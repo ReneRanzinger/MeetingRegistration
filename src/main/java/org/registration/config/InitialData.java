@@ -51,7 +51,7 @@ private void addAllConferences() {
 		c1.setRegistrationEnd(registrationEnd);
 		c1.setAbstractStart(abstractStart);
 		c1.setAbstractEnd(abstractEnd);
-		c1.setPostRegistrationCode("CONFIRM");
+		c1.setPostRegistrationCode("A001");
 		c1.setEmailList("vj21381@uga.edu");
 		c1.setConfirmationEmail("Your registration is confirm for UGA conference 01 conference");
 		c1.setShortTalks(true);	
@@ -60,10 +60,10 @@ private void addAllConferences() {
 		
 		ConferenceEntity c2 = new ConferenceEntity();
 		
-		registrationStart = new Timestamp(df.parse("07/01/2018").getTime());
-		registrationEnd = new Timestamp(df.parse("08/30/2018").getTime());
-		abstractStart = new Timestamp(df.parse("07/15/2018").getTime());
-		abstractEnd = new Timestamp(df.parse("08/25/2018").getTime());
+		registrationStart = new Timestamp(df.parse("09/01/2018").getTime());
+		registrationEnd = new Timestamp(df.parse("09/30/2018").getTime());
+		abstractStart = new Timestamp(df.parse("09/15/2018").getTime());
+		abstractEnd = new Timestamp(df.parse("09/25/2018").getTime());
 		
 		c2.setConferenceCode("A02");
 		c2.setConferenceName("UGA conference 02");
@@ -71,7 +71,7 @@ private void addAllConferences() {
 		c2.setRegistrationEnd(registrationEnd);
 		c2.setAbstractStart(abstractStart);
 		c2.setAbstractEnd(abstractEnd);
-		c2.setPostRegistrationCode("CONFIRM");
+		c2.setPostRegistrationCode("A002");
 		c2.setEmailList("vj21381@uga.edu");
 		c2.setConfirmationEmail("Your registration is confirm for UGA conference 02 conference");
 		c2.setShortTalks(false);	
@@ -80,10 +80,10 @@ private void addAllConferences() {
 		
 		ConferenceEntity c3 = new ConferenceEntity();
 		
-		registrationStart = new Timestamp(df.parse("09/01/2018").getTime());
-		registrationEnd = new Timestamp(df.parse("09/30/2018").getTime());
-		abstractStart = new Timestamp(df.parse("09/15/2018").getTime());
-		abstractEnd = new Timestamp(df.parse("09/25/2018").getTime());
+		registrationStart = new Timestamp(df.parse("10/01/2018").getTime());
+		registrationEnd = new Timestamp(df.parse("10/30/2018").getTime());
+		abstractStart = new Timestamp(df.parse("10/15/2018").getTime());
+		abstractEnd = new Timestamp(df.parse("10/25/2018").getTime());
 		
 		c3.setConferenceCode("A03");
 		c3.setConferenceName("UGA conference 03");
@@ -91,7 +91,7 @@ private void addAllConferences() {
 		c3.setRegistrationEnd(registrationEnd);
 		c3.setAbstractStart(abstractStart);
 		c3.setAbstractEnd(abstractEnd);
-		c3.setPostRegistrationCode("CONFIRM");
+		c3.setPostRegistrationCode("A003");
 		c3.setEmailList("vj21381@uga.edu");
 		c3.setConfirmationEmail("Your registration is confirm for UGA conference 03 conference");
 		c3.setShortTalks(false);	

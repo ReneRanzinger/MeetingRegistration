@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.FeeEntity;
@@ -31,8 +32,8 @@ public class ConferenceController {
 	@Autowired
 	FeeManager feeManager;
 	
-	@GetMapping("/info/{conference_code}")
-	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code) {
+	@GetMapping(value = {"/info/{conference_code}","/info/{conference_code}/{post_reg_code}"})
+	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code, @PathVariable Optional<String> post_reg_code) {
 		
 		ConferenceEntity ce;
 		try {
@@ -69,6 +70,10 @@ public class ConferenceController {
 		} else if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationEnd()) > 0) {
 			statusCode=-1;
 		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationStart()) >= 0 && new Date().compareTo(ce.getRegistrationEnd()) <= 0) {
+			statusCode=0;
+		}
+		
+		if(post_reg_code.isPresent() && post_reg_code.get().equals(ce.getPostRegistrationCode())) {
 			statusCode=0;
 		}
 		
