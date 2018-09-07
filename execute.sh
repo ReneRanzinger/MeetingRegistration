@@ -1,7 +1,7 @@
 #!/bin/sh
 
 PIDFile="registrationApplication.pid"
-function cleanup(){
+function cleanup{
 old_PID=$(<"$PIDFile")
 if ps -p $old_PID > /dev/null
 then
