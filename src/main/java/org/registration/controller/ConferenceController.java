@@ -2,12 +2,15 @@ package org.registration.controller;
 
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+
+import javax.swing.text.DateFormatter;
 
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.FeeEntity;
@@ -46,11 +49,12 @@ public class ConferenceController {
 		}
 		
 		ConferenceInformation ci = new ConferenceInformation(conference_code);
+		SimpleDateFormat f = new SimpleDateFormat("EEEEE, MMMMMM dd yyyy");
 		
-		ci.setRegistrationStart(ce.getRegistrationStart());
-		ci.setRegistrationEnd(ce.getRegistrationEnd());
-		ci.setAbstractEnd(ce.getAbstractEnd());
-		ci.setAbstractStart(ce.getAbstractStart());
+		ci.setRegistrationStart(f.format(new Date(ce.getRegistrationStart().getTime())));
+		ci.setRegistrationEnd(f.format(new Date(ce.getRegistrationEnd().getTime())));
+		ci.setAbstractEnd(f.format(new Date(ce.getAbstractEnd().getTime())));
+		ci.setAbstractStart(f.format(new Date(ce.getAbstractStart().getTime())));
 		
 		List<FeeType> fees = new ArrayList<FeeType>();
 		

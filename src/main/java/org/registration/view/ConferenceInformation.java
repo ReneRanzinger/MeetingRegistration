@@ -9,10 +9,10 @@ import org.registration.persistence.FeeEntity;
 public class ConferenceInformation {
 
 	private String conferenceCode;
-	private Date registrationStart;
-	private Date registrationEnd;
-	private Date abstractStart;
-	private Date abstractEnd;
+	private String registrationStart;
+	private String registrationEnd;
+	private String abstractStart;
+	private String abstractEnd;
 	private List<FeeType> Fees;
 	int statusCode;
 	
@@ -33,35 +33,35 @@ public class ConferenceInformation {
 		this.conferenceCode = conferenceCode;
 	}
 
-	public Date getRegistrationStart() {
+	public String getRegistrationStart() {
 		return registrationStart;
 	}
 
-	public void setRegistrationStart(Date registrationStart) {
+	public void setRegistrationStart(String registrationStart) {
 		this.registrationStart = registrationStart;
 	}
 
-	public Date getRegistrationEnd() {
+	public String getRegistrationEnd() {
 		return registrationEnd;
 	}
 
-	public void setRegistrationEnd(Date registrationEnd) {
+	public void setRegistrationEnd(String registrationEnd) {
 		this.registrationEnd = registrationEnd;
 	}
 
-	public Date getAbstractStart() {
+	public String getAbstractStart() {
 		return abstractStart;
 	}
 
-	public void setAbstractStart(Date abstractStart) {
+	public void setAbstractStart(String abstractStart) {
 		this.abstractStart = abstractStart;
 	}
 
-	public Date getAbstractEnd() {
+	public String getAbstractEnd() {
 		return abstractEnd;
 	}
 
-	public void setAbstractEnd(Date abstractEnd) {
+	public void setAbstractEnd(String abstractEnd) {
 		this.abstractEnd = abstractEnd;
 	}
 
