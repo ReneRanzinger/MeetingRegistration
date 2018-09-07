@@ -52,7 +52,7 @@ public class EmailManageImpl implements EmailManager {
         message.setText("Hello " + participant.getFirstName() + "," +
         		"\n\n" + participant.getConference().getConfirmationEmail() +
         		"\n\nConfirmation number: " + participant.getParticipantId() +
-        		"\n\nRegistered email: " + participant.getParticipantId() +
+        		"\n\nRegistered email: " + participant.getEmail() +
         		"\n\nThank you");
         message.setFrom(this.username);
         
