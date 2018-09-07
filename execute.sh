@@ -1,12 +1,12 @@
 #!/bin/sh
 
 PIDFile="registrationApplication.pid"
-function cleanup {
+cleanup() {
 old_PID=$(<"$PIDFile")
 if ps -p $old_PID > /dev/null
 then
-	echo "Killing the existing instance of application"
-	kill -9 $old_pid
+echo "Killing the existing instance of application"
+kill -9 $old_pid
 fi
 }
 echo "Finding existing running application."
