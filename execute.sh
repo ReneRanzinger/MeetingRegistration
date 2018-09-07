@@ -1,7 +1,14 @@
 #!/bin/sh
 
 PIDFile="registrationApplication.pid"
-
+function cleanup(){
+old_PID=$(<"$PIDFile")
+if ps -p $old_PID > /dev/null
+then
+	echo "Killing the existing instance of application"
+	kill -9 $old_pid
+fi
+}
 echo "Finding existing running application."
 if [ ! -f $PIDFile ]
 then
@@ -16,13 +23,4 @@ mvn -U -Djasypt.encryptor.password=$JASYPT_SECRET -DskipTests=true spring-boot:r
 Application_PID=$!
 echo $Application_PID > $PIDFile
 echo "Done! Application is now up and running"
-
-function cleanup(){
-old_PID=$(<"$PIDFile")
-if ps -p $old_PID > /dev/null
-then
-	echo "Killing the existing instance of application"
-	kill -9 $old_pid
-fi
-}
 
