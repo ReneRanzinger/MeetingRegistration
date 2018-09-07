@@ -39,14 +39,8 @@ public class ConferenceController {
 	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code, @PathVariable Optional<String> post_reg_code) {
 		
 		ConferenceEntity ce;
-		try {
-				
-			ce = conferenceManager.findByConferenceCode(conference_code);
-			
-		}catch(Exception e) {
-			
-			return null;
-		}
+						
+		ce = conferenceManager.findByConferenceCode(conference_code);
 		
 		ConferenceInformation ci = new ConferenceInformation(conference_code);
 		SimpleDateFormat f = new SimpleDateFormat("EEEEE, MMMMMM dd yyyy");

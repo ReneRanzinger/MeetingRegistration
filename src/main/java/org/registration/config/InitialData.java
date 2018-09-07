@@ -34,105 +34,110 @@ public class InitialData implements ApplicationListener<ApplicationReadyEvent> {
 	}
 
 private void addAllConferences() {
-		
+		boolean firstTime=true;
 		try {
 		ConferenceEntity c1 = new ConferenceEntity();
 		
-		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-					
-		Timestamp registrationStart = new Timestamp(df.parse("06/01/2018").getTime());
-		Timestamp registrationEnd = new Timestamp(df.parse("06/30/2018").getTime());
-		Timestamp abstractStart = new Timestamp(df.parse("06/15/2018").getTime());
-		Timestamp abstractEnd = new Timestamp(df.parse("06/25/2018").getTime());
+		if(conferenceManager.findByConferenceCode("A01")!=null) {
+			firstTime=false;
+		}
 		
-		c1.setConferenceCode("A01");
-		c1.setConferenceName("UGA conference 01");
-		c1.setRegistrationStart(registrationStart);
-		c1.setRegistrationEnd(registrationEnd);
-		c1.setAbstractStart(abstractStart);
-		c1.setAbstractEnd(abstractEnd);
-		c1.setPostRegistrationCode("A001");
-		c1.setEmailList("vj21381@uga.edu");
-		c1.setConfirmationEmail("Your registration is confirm for UGA conference 01 conference");
-		c1.setShortTalks(true);	
-		
-		conferenceManager.createConference(c1);
-		
-		ConferenceEntity c2 = new ConferenceEntity();
-		
-		registrationStart = new Timestamp(df.parse("09/01/2018").getTime());
-		registrationEnd = new Timestamp(df.parse("09/30/2018").getTime());
-		abstractStart = new Timestamp(df.parse("09/15/2018").getTime());
-		abstractEnd = new Timestamp(df.parse("09/25/2018").getTime());
-		
-		c2.setConferenceCode("A02");
-		c2.setConferenceName("UGA conference 02");
-		c2.setRegistrationStart(registrationStart);
-		c2.setRegistrationEnd(registrationEnd);
-		c2.setAbstractStart(abstractStart);
-		c2.setAbstractEnd(abstractEnd);
-		c2.setPostRegistrationCode("A002");
-		c2.setEmailList("vj21381@uga.edu");
-		c2.setConfirmationEmail("Your registration is confirm for UGA conference 02 conference");
-		c2.setShortTalks(false);	
-		
-		conferenceManager.createConference(c2);
-		
-		ConferenceEntity c3 = new ConferenceEntity();
-		
-		registrationStart = new Timestamp(df.parse("10/01/2018").getTime());
-		registrationEnd = new Timestamp(df.parse("10/30/2018").getTime());
-		abstractStart = new Timestamp(df.parse("10/15/2018").getTime());
-		abstractEnd = new Timestamp(df.parse("10/25/2018").getTime());
-		
-		c3.setConferenceCode("A03");
-		c3.setConferenceName("UGA conference 03");
-		c3.setRegistrationStart(registrationStart);
-		c3.setRegistrationEnd(registrationEnd);
-		c3.setAbstractStart(abstractStart);
-		c3.setAbstractEnd(abstractEnd);
-		c3.setPostRegistrationCode("A003");
-		c3.setEmailList("vj21381@uga.edu");
-		c3.setConfirmationEmail("Your registration is confirm for UGA conference 03 conference");
-		c3.setShortTalks(false);	
-		
-		conferenceManager.createConference(c3);
-				
-		List<FeeEntity> fees = new ArrayList<FeeEntity>();
-		
-		FeeEntity f1 = new FeeEntity("Standard Fee",1000.0);
-		FeeEntity f2 = new FeeEntity("UGA Employee Fee",700.0);
-		FeeEntity f3 = new FeeEntity("Federal Employee Fee",500.0);
-		
-		f1.setConferenceEntity(c1);
-		feeManager.createFee(f1);
-		f2.setConferenceEntity(c1);
-		feeManager.createFee(f2);
-		f3.setConferenceEntity(c1);
-		feeManager.createFee(f3);
-		
-		f1 = new FeeEntity("Standard Fee",1000.0);
-		f2 = new FeeEntity("GW Employee Fee",700.0);
-		f3 = new FeeEntity("State Employee Fee",500.0);
-		
-		f1.setConferenceEntity(c2);
-		feeManager.createFee(f1);
-		f2.setConferenceEntity(c2);
-		feeManager.createFee(f2);
-		f3.setConferenceEntity(c2);
-		feeManager.createFee(f3);
-		
-		f1 = new FeeEntity("Standard Fee",1000.0);
-		f2 = new FeeEntity("Retired Employee Fee",700.0);
-		f3 = new FeeEntity("Current Employee Fee",500.0);
-		
-		f1.setConferenceEntity(c3);
-		feeManager.createFee(f1);
-		f2.setConferenceEntity(c3);
-		feeManager.createFee(f2);
-		f3.setConferenceEntity(c3);
-		feeManager.createFee(f3);
-		
+		if(firstTime) {
+			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+						
+			Timestamp registrationStart = new Timestamp(df.parse("06/01/2018").getTime());
+			Timestamp registrationEnd = new Timestamp(df.parse("06/30/2018").getTime());
+			Timestamp abstractStart = new Timestamp(df.parse("06/15/2018").getTime());
+			Timestamp abstractEnd = new Timestamp(df.parse("06/25/2018").getTime());
+			
+			c1.setConferenceCode("A01");
+			c1.setConferenceName("UGA conference 01");
+			c1.setRegistrationStart(registrationStart);
+			c1.setRegistrationEnd(registrationEnd);
+			c1.setAbstractStart(abstractStart);
+			c1.setAbstractEnd(abstractEnd);
+			c1.setPostRegistrationCode("A001");
+			c1.setEmailList("vj21381@uga.edu");
+			c1.setConfirmationEmail("Your registration is confirm for UGA conference 01 conference");
+			c1.setShortTalks(true);	
+			
+			conferenceManager.createConference(c1);
+			
+			ConferenceEntity c2 = new ConferenceEntity();
+			
+			registrationStart = new Timestamp(df.parse("09/01/2018").getTime());
+			registrationEnd = new Timestamp(df.parse("09/30/2018").getTime());
+			abstractStart = new Timestamp(df.parse("09/15/2018").getTime());
+			abstractEnd = new Timestamp(df.parse("09/25/2018").getTime());
+			
+			c2.setConferenceCode("A02");
+			c2.setConferenceName("UGA conference 02");
+			c2.setRegistrationStart(registrationStart);
+			c2.setRegistrationEnd(registrationEnd);
+			c2.setAbstractStart(abstractStart);
+			c2.setAbstractEnd(abstractEnd);
+			c2.setPostRegistrationCode("A002");
+			c2.setEmailList("vj21381@uga.edu");
+			c2.setConfirmationEmail("Your registration is confirm for UGA conference 02 conference");
+			c2.setShortTalks(false);	
+			
+			conferenceManager.createConference(c2);
+						
+			ConferenceEntity c3 = new ConferenceEntity();
+			
+			registrationStart = new Timestamp(df.parse("10/01/2018").getTime());
+			registrationEnd = new Timestamp(df.parse("10/30/2018").getTime());
+			abstractStart = new Timestamp(df.parse("10/15/2018").getTime());
+			abstractEnd = new Timestamp(df.parse("10/25/2018").getTime());
+			
+			c3.setConferenceCode("A03");
+			c3.setConferenceName("UGA conference 03");
+			c3.setRegistrationStart(registrationStart);
+			c3.setRegistrationEnd(registrationEnd);
+			c3.setAbstractStart(abstractStart);
+			c3.setAbstractEnd(abstractEnd);
+			c3.setPostRegistrationCode("A003");
+			c3.setEmailList("vj21381@uga.edu");
+			c3.setConfirmationEmail("Your registration is confirm for UGA conference 03 conference");
+			c3.setShortTalks(false);	
+			
+			conferenceManager.createConference(c3);
+							
+			List<FeeEntity> fees = new ArrayList<FeeEntity>();
+			
+			FeeEntity f1 = new FeeEntity("Standard Fee",1000.0);
+			FeeEntity f2 = new FeeEntity("UGA Employee Fee",700.0);
+			FeeEntity f3 = new FeeEntity("Federal Employee Fee",500.0);
+			
+			f1.setConferenceEntity(c1);
+			feeManager.createFee(f1);
+			f2.setConferenceEntity(c1);
+			feeManager.createFee(f2);
+			f3.setConferenceEntity(c1);
+			feeManager.createFee(f3);
+			
+			f1 = new FeeEntity("Standard Fee",1000.0);
+			f2 = new FeeEntity("GW Employee Fee",700.0);
+			f3 = new FeeEntity("State Employee Fee",500.0);
+			
+			f1.setConferenceEntity(c2);
+			feeManager.createFee(f1);
+			f2.setConferenceEntity(c2);
+			feeManager.createFee(f2);
+			f3.setConferenceEntity(c2);
+			feeManager.createFee(f3);
+			
+			f1 = new FeeEntity("Standard Fee",1000.0);
+			f2 = new FeeEntity("Retired Employee Fee",700.0);
+			f3 = new FeeEntity("Current Employee Fee",500.0);
+			
+			f1.setConferenceEntity(c3);
+			feeManager.createFee(f1);
+			f2.setConferenceEntity(c3);
+			feeManager.createFee(f2);
+			f3.setConferenceEntity(c3);
+			feeManager.createFee(f3);
+			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
