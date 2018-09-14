@@ -1,4 +1,4 @@
--- DROP SCHEMA IF EXISTS registration CASCADE;
+--DROP SCHEMA IF EXISTS registration CASCADE;
 
 CREATE SCHEMA IF NOT EXISTS registration AUTHORIZATION registration;
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS registration.participant (
   institution varchar(256) NOT NULL,
   email varchar(128) NOT NULL,
   address text,
-  phone varchar(128) NOT NULL,
+  phone varchar(128),
   profession varchar(128) NOT NULL,
   promotion_code varchar(32),
   fee_id bigint NOT NULL REFERENCES registration.fee(fee_id),

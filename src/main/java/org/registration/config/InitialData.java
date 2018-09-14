@@ -1,11 +1,6 @@
 package org.registration.config;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.registration.persistence.ConferenceEntity;
@@ -38,107 +33,65 @@ private void addAllConferences() {
 		try {
 		ConferenceEntity c1 = new ConferenceEntity();
 		
-		if(conferenceManager.findByConferenceCode("A01")!=null) {
+		if(conferenceManager.findByConferenceCode("XABKSHRKZU")!=null) {
 			firstTime=false;
 		}
 		
-		if(firstTime) {
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-						
-			Timestamp registrationStart = new Timestamp(df.parse("06/01/2018").getTime());
-			Timestamp registrationEnd = new Timestamp(df.parse("06/30/2018").getTime());
-			Timestamp abstractStart = new Timestamp(df.parse("06/15/2018").getTime());
-			Timestamp abstractEnd = new Timestamp(df.parse("06/25/2018").getTime());
+		if(firstTime) {						
+			Timestamp registrationStart = java.sql.Timestamp.valueOf("2018-09-01 00:00:00");
+			Timestamp registrationEnd = java.sql.Timestamp.valueOf("2018-11-05 23:59:59");
+			Timestamp abstractStart = java.sql.Timestamp.valueOf("2018-09-01 00:00:00");
+			Timestamp abstractEnd = java.sql.Timestamp.valueOf("2018-09-01 23:59:59");
 			
-			c1.setConferenceCode("A01");
-			c1.setConferenceName("UGA conference 01");
+			c1.setConferenceCode("XABKSHRKZU");
+			c1.setConferenceName("SFG - GlycoBioInformatics satellite meeting");
 			c1.setRegistrationStart(registrationStart);
 			c1.setRegistrationEnd(registrationEnd);
 			c1.setAbstractStart(abstractStart);
 			c1.setAbstractEnd(abstractEnd);
-			c1.setPostRegistrationCode("A001");
-			c1.setEmailList("vj21381@uga.edu");
-			c1.setConfirmationEmail("Your registration is confirm for UGA conference 01 conference");
-			c1.setShortTalks(true);	
+			c1.setPostRegistrationCode("JSIWKCGAUR");
+			c1.setEmailList("rene@ccrc.uga.edu");
+			c1.setConfirmationEmail("Dear ${user.firstName} ${user.lastName},"
+					+ "\n\n"
+					+ "Thank you for registering for the GlycoBioInformatics satellite meeting "
+					+ "of the annual SFG meeting 2018, which will be held November 5, 2018, in "
+					+ "New Orleans, Louisiana. Your registration confirmation number is "
+					+ "${user.registrationId}."
+					+ "\n\n"
+					+ "The program for the satellite can be found under: "
+					+ "http://glycomics.ccrc.uga.edu/meetings/sfg/GlycoInformaticsSatelliteProgram.pdf . "
+					+ "The meeting will have 3 sessions: "
+					+ "(1) Databases and information standards; "
+					+ "(2) Processing and annotating analytical data; and "
+					+ "(3) Tools. In these sessions database providers and software developers will "
+					+ "introduce their software tools to the audience in short talks followed by a few "
+					+ "questions. Later in the afternoon all developers will present their tool in live "
+					+ "demonstrations to the audience."
+					+ "\n\n"
+					+ "We look forward to your participation in what we feel will be a very "
+					+ "exciting meeting. Please do not hesitate to contact René Ranzinger "
+					+ "(rene@ccrc.uga.edu) if you need additional assistance, or if you have "
+					+ "any questions or concerns."
+					+ "\n\n"
+					+ "Yours sincerely,"
+					+ "\n"
+					+ " René Ranzinger"
+					+ "\n\n"
+					+ "Please note: The registration for the satellite does not entitle you to attend the SFG main meeting. "
+					+ "If you wish to attend this meeting as well please make sure to register at the meeting website "
+					+ "(http://glycobiology.org/Meetings.aspx).");
+			
+			c1.setShortTalks(false);	
 			
 			conferenceManager.createConference(c1);
-			
-			ConferenceEntity c2 = new ConferenceEntity();
-			
-			registrationStart = new Timestamp(df.parse("09/01/2018").getTime());
-			registrationEnd = new Timestamp(df.parse("09/30/2018").getTime());
-			abstractStart = new Timestamp(df.parse("09/15/2018").getTime());
-			abstractEnd = new Timestamp(df.parse("09/25/2018").getTime());
-			
-			c2.setConferenceCode("A02");
-			c2.setConferenceName("UGA conference 02");
-			c2.setRegistrationStart(registrationStart);
-			c2.setRegistrationEnd(registrationEnd);
-			c2.setAbstractStart(abstractStart);
-			c2.setAbstractEnd(abstractEnd);
-			c2.setPostRegistrationCode("A002");
-			c2.setEmailList("vj21381@uga.edu");
-			c2.setConfirmationEmail("Your registration is confirm for UGA conference 02 conference");
-			c2.setShortTalks(false);	
-			
-			conferenceManager.createConference(c2);
-						
-			ConferenceEntity c3 = new ConferenceEntity();
-			
-			registrationStart = new Timestamp(df.parse("10/01/2018").getTime());
-			registrationEnd = new Timestamp(df.parse("10/30/2018").getTime());
-			abstractStart = new Timestamp(df.parse("10/15/2018").getTime());
-			abstractEnd = new Timestamp(df.parse("10/25/2018").getTime());
-			
-			c3.setConferenceCode("A03");
-			c3.setConferenceName("UGA conference 03");
-			c3.setRegistrationStart(registrationStart);
-			c3.setRegistrationEnd(registrationEnd);
-			c3.setAbstractStart(abstractStart);
-			c3.setAbstractEnd(abstractEnd);
-			c3.setPostRegistrationCode("A003");
-			c3.setEmailList("vj21381@uga.edu");
-			c3.setConfirmationEmail("Your registration is confirm for UGA conference 03 conference");
-			c3.setShortTalks(false);	
-			
-			conferenceManager.createConference(c3);
-							
-			List<FeeEntity> fees = new ArrayList<FeeEntity>();
-			
-			FeeEntity f1 = new FeeEntity("Standard Fee",1000.0);
-			FeeEntity f2 = new FeeEntity("UGA Employee Fee",700.0);
-			FeeEntity f3 = new FeeEntity("Federal Employee Fee",500.0);
+										
+			FeeEntity f1 = new FeeEntity("Standard Fee",0.0);
 			
 			f1.setConferenceEntity(c1);
 			feeManager.createFee(f1);
-			f2.setConferenceEntity(c1);
-			feeManager.createFee(f2);
-			f3.setConferenceEntity(c1);
-			feeManager.createFee(f3);
 			
-			f1 = new FeeEntity("Standard Fee",1000.0);
-			f2 = new FeeEntity("GW Employee Fee",700.0);
-			f3 = new FeeEntity("State Employee Fee",500.0);
-			
-			f1.setConferenceEntity(c2);
-			feeManager.createFee(f1);
-			f2.setConferenceEntity(c2);
-			feeManager.createFee(f2);
-			f3.setConferenceEntity(c2);
-			feeManager.createFee(f3);
-			
-			f1 = new FeeEntity("Standard Fee",1000.0);
-			f2 = new FeeEntity("Retired Employee Fee",700.0);
-			f3 = new FeeEntity("Current Employee Fee",500.0);
-			
-			f1.setConferenceEntity(c3);
-			feeManager.createFee(f1);
-			f2.setConferenceEntity(c3);
-			feeManager.createFee(f2);
-			f3.setConferenceEntity(c3);
-			feeManager.createFee(f3);
 			}
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

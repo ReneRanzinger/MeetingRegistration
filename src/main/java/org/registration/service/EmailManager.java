@@ -4,6 +4,6 @@ import org.registration.persistence.ParticipantEntity;
 
 public interface EmailManager {
 
-	public void sendConfirmationEmail(ParticipantEntity participant);
+	public String sendConfirmationEmail(ParticipantEntity participant);
 	
 }

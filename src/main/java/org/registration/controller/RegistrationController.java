@@ -84,16 +84,16 @@ public class RegistrationController {
 			}
 			
 			participantManager.createParticipant(newParticipant);
-			
+        	String confirmationText;
 			try {
-	        	emailManager.sendConfirmationEmail(newParticipant);
+	        	confirmationText = emailManager.sendConfirmationEmail(newParticipant);
 	        } catch (MailSendException e) {
 	        	// email cannot be sent, remove the participant
 	        	//participantRepositoy.delete(newParticipant);
 	        	throw e;
 	        }
 			
-			return new Confirmation("User added successfully", HttpStatus.CREATED.value());
+			return new Confirmation(confirmationText, HttpStatus.CREATED.value());
 		} catch (Exception e) {
 			return new Confirmation("USER not added", HttpStatus.EXPECTATION_FAILED.value());
 		}

@@ -55,7 +55,7 @@ public class ParticipantEntity {
 	@Column(name="address")
 	private String address;
 	
-	@Column(name="phone", nullable = false)
+	@Column(name="phone")
 	private String phone;
 	
 	@Column(name="profession", nullable = false)
