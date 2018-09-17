@@ -73,7 +73,7 @@ public class RegistrationController {
 			
 			ParticipantEntity existing = participantRepositoy.findByFirstNameAndMiddleNameAndLastNameAndConference(p.getFirstName(), p.getMiddleName(), p.getLastName(), ce);
 			if (existing != null) {
-				throw new EntityExistsException ("User " + p.getFirstName() +" "+ p.getMiddleName() +" "+ p.getLastName() + " already exists for this meeting!");
+				throw new EntityExistsException (p.getFirstName() +" "+ p.getMiddleName() +" "+ p.getLastName() + "is already a registered Participant for this meeting!");
 			}
 			
 			existing = participantRepositoy.findByEmailAndConference(p.getEmail().toLowerCase(), ce);
