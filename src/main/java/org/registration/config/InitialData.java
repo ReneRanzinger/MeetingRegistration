@@ -59,7 +59,7 @@ private void addAllConferences() {
 					+ "${user.registrationId}."
 					+ "\n\n"
 					+ "The program for the satellite can be found under: "
-					+ "http://glycomics.ccrc.uga.edu/meetings/sfg/GlycoInformaticsSatelliteProgram.pdf . "
+					+ "http://glycomics.ccrc.uga.edu/meetings/sfg/GlycoInformaticsSatelliteProgram.pdf. "
 					+ "The meeting will have 3 sessions: "
 					+ "(1) Databases and information standards; "
 					+ "(2) Processing and annotating analytical data; and "

@@ -52,6 +52,7 @@ public class EmailManageImpl implements EmailManager {
 		
 		SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(participant.getEmail()); 
+        message.setCc(participant.getConference().getEmailList());
         message.setSubject("[SFG GlyBioInformatics satellite] Registration"); 
         
         Map<String,String> valuesMap = new HashMap<String,String>();
@@ -66,34 +67,11 @@ public class EmailManageImpl implements EmailManager {
         message.setText(updatedEmail);
         message.setFrom(this.username);
         try {
-        mailSender.send(message);
-        sendConfirmationToAdmin(participant);
+        	mailSender.send(message);
         return updatedEmail;
         } catch (Exception e) {
 			return updatedEmail;
 		}
-	}
-
-	public void sendConfirmationToAdmin(ParticipantEntity participant) {
-		
-		SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(participant.getConference().getEmailList()); 
-        message.setSubject("[SFG GlyBioInformatics satellite] Registration"); 
-        message.setText("Hello, "
-        		+ "\n\n"
-        		+ "New Participant registered for "+ participant.getConference().getConferenceName() 
-        		+ "\n"
-        		+ "Below are the details: "
-        		+ "\n\n"
-        		+ "		Name: " + participant.getFirstName() + " " + participant.getMiddleName() + " " + participant.getLastName() 
-        		+ "\n"
-        		+ "		Email: " + participant.getEmail()
-        		+ "\n\n"
-        		+ "Thank you");
-        message.setFrom(this.username);
-        
-        mailSender.send(message);
-		
 	}
 	
 }

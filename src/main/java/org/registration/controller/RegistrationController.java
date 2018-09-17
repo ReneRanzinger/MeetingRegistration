@@ -48,7 +48,6 @@ public class RegistrationController {
 		
 			System.out.println(p);
 		
-		try {
 			ParticipantEntity newParticipant = new ParticipantEntity(); 
 			ConferenceEntity ce = conferenceManager.findByConferenceCode(p.getConferenceCode());
 			newParticipant.setConference(ce);
@@ -74,7 +73,7 @@ public class RegistrationController {
 			
 			ParticipantEntity existing = participantRepositoy.findByFirstNameAndMiddleNameAndLastNameAndConference(p.getFirstName(), p.getMiddleName(), p.getLastName(), ce);
 			if (existing != null) {
-				throw new EntityExistsException ("This user " + p.getFirstName() +" "+ p.getMiddleName() +" "+ p.getLastName() + " already exists for conference! "+ce.getConferenceCode());
+				throw new EntityExistsException ("User " + p.getFirstName() +" "+ p.getMiddleName() +" "+ p.getLastName() + " already exists for this meeting!");
 			}
 			
 			existing = participantRepositoy.findByEmailAndConference(p.getEmail().toLowerCase(), ce);
@@ -88,15 +87,11 @@ public class RegistrationController {
 			try {
 	        	confirmationText = emailManager.sendConfirmationEmail(newParticipant);
 	        } catch (MailSendException e) {
-	        	// email cannot be sent, remove the participant
-	        	//participantRepositoy.delete(newParticipant);
 	        	throw e;
 	        }
 			
 			return new Confirmation(confirmationText, HttpStatus.CREATED.value());
-		} catch (Exception e) {
-			return new Confirmation("USER not added", HttpStatus.EXPECTATION_FAILED.value());
-		}
+		
 				
 	}
 	

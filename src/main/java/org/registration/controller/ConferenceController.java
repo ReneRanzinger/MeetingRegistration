@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.swing.text.DateFormatter;
 
 import org.registration.persistence.ConferenceEntity;
@@ -41,6 +42,10 @@ public class ConferenceController {
 		ConferenceEntity ce;
 						
 		ce = conferenceManager.findByConferenceCode(conference_code);
+		
+		if(ce == null) {
+			throw new EntityNotFoundException();
+		}
 		
 		ConferenceInformation ci = new ConferenceInformation(conference_code);
 		SimpleDateFormat f = new SimpleDateFormat("EEEEE, MMMMMM dd yyyy");
