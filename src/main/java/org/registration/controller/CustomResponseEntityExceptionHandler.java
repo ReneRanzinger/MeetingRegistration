@@ -15,6 +15,7 @@ import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.postgresql.util.PSQLException;
 import org.registration.exception.EmailExistsException;
+import org.registration.exception.PromoCodeNotFoundException;
 import org.registration.view.ErrorCodes;
 import org.registration.view.ErrorMessage;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -106,6 +107,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     		DataIntegrityViolationException.class,
     		ConstraintViolationException.class,
     		EmailExistsException.class,
+    		PromoCodeNotFoundException.class,
     	//	GlycanNotFoundException.class,
     	//	MotifNotFoundException.class,
     	//	GlycanExistsException.class,
@@ -140,6 +142,10 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
             status = HttpStatus.CONFLICT;
             errorMessage = new ErrorMessage (ex.getMessage());
             errorMessage.setErrorCode(ErrorCodes.NOT_ALLOWED);
+        } else if (ex instanceof PromoCodeNotFoundException ) {
+            status = HttpStatus.NOT_FOUND;
+            errorMessage = new ErrorMessage (ex.getMessage());
+            errorMessage.setErrorCode(ErrorCodes.NOT_ALLOWED);    
         } else if (ex instanceof IllegalArgumentException) {
         	status = HttpStatus.BAD_REQUEST;
         	ErrorCodes code;

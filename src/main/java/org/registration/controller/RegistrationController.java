@@ -5,10 +5,13 @@ import java.sql.Timestamp;
 import javax.persistence.EntityExistsException;
 
 import org.registration.exception.EmailExistsException;
+import org.registration.exception.PromoCodeNotFoundException;
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.FeeEntity;
 import org.registration.persistence.ParticipantEntity;
+import org.registration.persistence.PromotionCodeEntity;
 import org.registration.persistence.dao.ParticipantRepository;
+import org.registration.persistence.dao.PromoCodeRepository;
 import org.registration.service.ConferenceManager;
 import org.registration.service.EmailManager;
 import org.registration.service.FeeManager;
@@ -37,10 +40,13 @@ public class RegistrationController {
 	FeeManager feeManager;
 	
 	@Autowired
-	ParticipantRepository participantRepositoy;
+	ParticipantRepository participantRepository;
 	
 	@Autowired
 	EmailManager emailManager;
+	
+	@Autowired
+	PromoCodeRepository promoCodeRepository;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, 
     		consumes={"application/xml", "application/json"})
@@ -62,6 +68,7 @@ public class RegistrationController {
 			newParticipant.setTitle(p.getTitle().trim());
 			newParticipant.setProfession(p.getProfession().trim());
 			newParticipant.setPromotionCode(p.getPromotionCode().trim());
+			
 			String feeName = p.getFee().getName().trim();
 			FeeEntity fe = feeManager.findByNameAndConferenceEntity(feeName, ce);
 						
@@ -71,15 +78,20 @@ public class RegistrationController {
 			newParticipant.setPayed(false);
 			newParticipant.setDiet(p.getDiet().trim());
 			
-			ParticipantEntity existing = participantRepositoy.findByFirstNameAndMiddleNameAndLastNameAndConference(p.getFirstName(), p.getMiddleName(), p.getLastName(), ce);
+			ParticipantEntity existing = participantRepository.findByFirstNameAndMiddleNameAndLastNameAndConference(p.getFirstName(), p.getMiddleName(), p.getLastName(), ce);
 			if (existing != null) {
-				throw new EntityExistsException (p.getFirstName() +" "+ p.getMiddleName() +" "+ p.getLastName() + "is already a registered Participant for this meeting!");
+				throw new EntityExistsException (p.getFirstName() +" "+ p.getMiddleName() +" "+ p.getLastName() + " is already a registered Participant for this meeting!");
 			}
 			
-			existing = participantRepositoy.findByEmailAndConference(p.getEmail().toLowerCase(), ce);
+			existing = participantRepository.findByEmailAndConference(p.getEmail().toLowerCase(), ce);
 			
 			if (existing != null) {
 				throw new EmailExistsException ("There is already a registered participant with this email: " + p.getEmail());
+			}
+			
+			PromotionCodeEntity code = promoCodeRepository.findByCodeAndConference(p.getPromotionCode().trim(), ce);
+			if(code == null) {
+				throw new PromoCodeNotFoundException(p.getPromotionCode().trim()+" is not valid promo code for this meeting");
 			}
 			
 			participantManager.createParticipant(newParticipant);
