@@ -89,11 +89,12 @@ public class RegistrationController {
 				throw new EmailExistsException ("There is already a registered participant with this email: " + p.getEmail());
 			}
 			
-			PromotionCodeEntity code = promoCodeRepository.findByCodeAndConference(p.getPromotionCode().trim(), ce);
-			if(code == null) {
-				throw new PromoCodeNotFoundException(p.getPromotionCode().trim()+" is not valid promo code for this meeting");
+			if(p.getPromotionCode().trim().length() != 0) {
+				PromotionCodeEntity code = promoCodeRepository.findByCodeAndConference(p.getPromotionCode().trim(), ce);
+				if(code == null) {
+					throw new PromoCodeNotFoundException(p.getPromotionCode().trim()+" is not valid promo code for this meeting");
+				}
 			}
-			
 			participantManager.createParticipant(newParticipant);
         	String confirmationText;
 			try {
