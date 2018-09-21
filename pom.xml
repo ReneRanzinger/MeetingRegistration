@@ -68,6 +68,12 @@
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.0</version>
 		</dependency>
+		<!-- Apache poi for excel sheets -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.17</version>
+		</dependency>
 	</dependencies>
 
 	<build>

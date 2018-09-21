@@ -4,14 +4,11 @@ package org.registration.controller;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
-import javax.swing.text.DateFormatter;
 
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.FeeEntity;
@@ -20,7 +17,6 @@ import org.registration.service.FeeManager;
 import org.registration.view.ConferenceInformation;
 import org.registration.view.FeeType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
