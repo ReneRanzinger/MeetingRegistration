@@ -1,5 +1,7 @@
 package org.registration.view;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +40,7 @@ public class ParticipantsExcelView extends AbstractXlsView{
 	    heading.createCell(8).setCellValue("Email");
 	    heading.createCell(9).setCellValue("Phone");
 	    heading.createCell(10).setCellValue("Address");
-	    heading.createCell(11).setCellValue("Registration time");
+	    heading.createCell(11).setCellValue("Registration Date & Time");
 	    heading.createCell(15).setCellValue("Diet");
 	    heading.createCell(16).setCellValue("Comment");
 	    heading.createCell(12).setCellValue("Fee");
@@ -48,7 +50,7 @@ public class ParticipantsExcelView extends AbstractXlsView{
 	    heading.createCell(18).setCellValue("Abstract Filename");
 	    heading.createCell(19).setCellValue("Consider Talk");
 
-	
+	    SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss z");
 	    int rowNumber = 1;
 	    
 	    for (ParticipantEntity p : participants) {
@@ -66,7 +68,7 @@ public class ParticipantsExcelView extends AbstractXlsView{
 	    	row.createCell(8).setCellValue(p.getEmail());
 	    	row.createCell(9).setCellValue(p.getPhone());
 	    	row.createCell(10).setCellValue(p.getAddress());
-	    	row.createCell(11).setCellValue(p.getRegistrationTime());
+	    	row.createCell(11).setCellValue(f.format(new Date(p.getRegistrationTime().getTime())));
 	    	row.createCell(15).setCellValue(p.getDiet());
 	    	row.createCell(16).setCellValue(p.getComment());
 	    	row.createCell(12).setCellValue(p.getFee().getAmount());
