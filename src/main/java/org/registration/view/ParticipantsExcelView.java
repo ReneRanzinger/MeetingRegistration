@@ -50,7 +50,7 @@ public class ParticipantsExcelView extends AbstractXlsView{
 	    heading.createCell(18).setCellValue("Abstract Filename");
 	    heading.createCell(19).setCellValue("Consider Talk");
 
-	    SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss z");
+	    SimpleDateFormat f = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 	    int rowNumber = 1;
 	    
 	    for (ParticipantEntity p : participants) {
