@@ -1,5 +1,8 @@
 package org.registration.service;
 
+import java.util.List;
+
+import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.ParticipantEntity;
 import org.registration.persistence.dao.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +19,32 @@ public class ParticipantManagerImpl implements ParticipantManager {
 	public void createParticipant(ParticipantEntity newParticipant) {
 		repository.save(newParticipant);
 	}
+
+	@Override
+	public List<ParticipantEntity> findAllParticipantsByConference(ConferenceEntity ce) {
+		
+		return repository.findByConference(ce);
+	}
+
+	@Override
+	public void deleteParticipantById(Long participantId) {
+		
+		repository.deleteById(participantId);
+		
+	}
+
+	@Override
+	public ParticipantEntity findByParticipantId(Long participantId) {
+		
+		return repository.findByParticipantId(participantId);
+	}
+
+	@Override
+	public ParticipantEntity findByParticipantIdAndEmail(Long participantId, String email) {
+		
+		return repository.findByParticipantIdAndEmail(participantId, email);
+	}
+	
+	
 
 }

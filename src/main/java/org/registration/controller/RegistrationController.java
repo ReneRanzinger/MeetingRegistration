@@ -3,6 +3,7 @@ package org.registration.controller;
 import java.sql.Timestamp;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 
 import org.registration.exception.EmailExistsException;
 import org.registration.exception.PromoCodeNotFoundException;
@@ -56,6 +57,11 @@ public class RegistrationController {
 		
 			ParticipantEntity newParticipant = new ParticipantEntity(); 
 			ConferenceEntity ce = conferenceManager.findByConferenceCode(p.getConferenceCode());
+			
+			if(ce == null) {
+				throw new EntityNotFoundException();
+			}
+			
 			newParticipant.setConference(ce);
 			newParticipant.setFirstName(p.getFirstName().trim());
 			newParticipant.setMiddleName(p.getMiddleName().trim());
@@ -103,11 +109,7 @@ public class RegistrationController {
 	        	throw e;
 	        }
 			
-			return new Confirmation(confirmationText, HttpStatus.CREATED.value());
-		
-				
+			return new Confirmation(confirmationText, HttpStatus.CREATED.value());			
 	}
-	
-	
-	
+		
 }

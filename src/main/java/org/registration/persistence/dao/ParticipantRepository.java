@@ -13,4 +13,6 @@ public interface ParticipantRepository extends JpaRepository<ParticipantEntity, 
 	public ParticipantEntity findByFirstNameAndMiddleNameAndLastNameAndConference(String firstName, String middleName, String lastName, ConferenceEntity ce);
 	public ParticipantEntity findByEmailAndConference(String email, ConferenceEntity ce);	
 	public List<ParticipantEntity> findByConference(ConferenceEntity ce);
+	public ParticipantEntity findByParticipantId(Long participantId);
+	public ParticipantEntity findByParticipantIdAndEmail(Long participantId,String email);
 }

@@ -1,5 +1,7 @@
 package org.registration.service;
 
+import java.util.List;
+
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.dao.ConferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +25,19 @@ public class ConferenceManagerImpl implements ConferenceManager {
 		
 		return repository.findByConferenceCode(conferenceCode);
 	}
+
+	@Override
+	public List<ConferenceEntity> findAllConferences() {
+		
+		return repository.findAll();
+	}
+
+	@Override
+	public ConferenceEntity findByConferenceId(Long conferenceId) {
+		
+		return repository.findByConferenceId(conferenceId);
+	}
+	
+	
 
 }

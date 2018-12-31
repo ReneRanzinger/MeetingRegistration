@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "promotion_code", schema="registration")
 public class PromotionCodeEntity {
@@ -24,6 +26,7 @@ public class PromotionCodeEntity {
     @SequenceGenerator(name="seq4", sequenceName="promotion_code_seq", initialValue=1, allocationSize=1)
 	private Long promotionCodeId;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="conference_id")
 	private ConferenceEntity conference;

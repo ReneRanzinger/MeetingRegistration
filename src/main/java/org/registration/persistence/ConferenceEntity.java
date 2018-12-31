@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="conference", schema="registration")
 public class ConferenceEntity {
@@ -57,6 +59,7 @@ public class ConferenceEntity {
 	@OneToMany(mappedBy="conferenceEntity", cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
 	private List<FeeEntity> feeEntities;	
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "conference", cascade= {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})	
 	private Collection<ParticipantEntity> participants;
 	
