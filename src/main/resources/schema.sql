@@ -67,6 +67,11 @@ CREATE TABLE IF NOT EXISTS registration.configuration (
   value varchar(256)
 );
 
+CREATE TABLE IF NOT EXISTS registration.admin (
+  username varchar(256),
+  password varchar(256)
+);
+
 CREATE TABLE IF NOT EXISTS registration.conference_promocode (
   conference_id bigint NOT NULL REFERENCES registration.conference(conference_id),
   promotion_code_id bigint NOT NULL REFERENCES registration.promotion_code(promotion_code_id),
