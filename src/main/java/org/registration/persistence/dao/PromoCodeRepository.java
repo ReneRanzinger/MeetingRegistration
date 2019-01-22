@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface PromoCodeRepository extends JpaRepository<PromotionCodeEntity, Long> {
 
 	public PromotionCodeEntity findByCodeAndConference(String code, ConferenceEntity conference);
+	public PromotionCodeEntity findByPromotionCodeId(Long promoId);
 	
 }

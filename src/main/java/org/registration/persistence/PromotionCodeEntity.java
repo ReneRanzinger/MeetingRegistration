@@ -31,8 +31,10 @@ public class PromotionCodeEntity {
 	@JoinColumn(name="conference_id")
 	private ConferenceEntity conference;
 	
-	
+	@Column(name= "code", nullable = false)
 	private String code;
+	
+	@Column(name="description", nullable = false)
 	private String description;
 	
 	public PromotionCodeEntity() {

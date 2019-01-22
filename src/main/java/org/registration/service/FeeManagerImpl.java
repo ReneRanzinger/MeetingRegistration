@@ -36,6 +36,16 @@ public class FeeManagerImpl implements FeeManager {
 		return repository.findByNameAndConferenceEntity(name, conference);
 	}
 
-	
+	@Override
+	public FeeEntity findByFeeId(Long feeId) {
+		
+		return repository.findByFeeId(feeId);
+	}
+
+	@Override
+	public void deleteById(Long feeId) {
+		
+		repository.deleteById(feeId);
+	}
 	
 }

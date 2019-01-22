@@ -3,6 +3,7 @@ package org.registration.service;
 import java.util.List;
 
 import org.registration.persistence.ConferenceEntity;
+import org.registration.persistence.FeeEntity;
 import org.registration.persistence.ParticipantEntity;
 import org.registration.persistence.dao.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,12 @@ public class ParticipantManagerImpl implements ParticipantManager {
 	public ParticipantEntity findByParticipantIdAndEmail(Long participantId, String email) {
 		
 		return repository.findByParticipantIdAndEmail(participantId, email);
+	}
+
+	@Override
+	public List<ParticipantEntity> findAllParticipantsByFee(FeeEntity fe) {
+		
+		return repository.findByFee(fe);
 	}
 	
 	

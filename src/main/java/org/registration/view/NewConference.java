@@ -12,7 +12,6 @@ public class NewConference {
 	private String emailList;
 	private String confirmationEmail;
 	private boolean shortTalks;
-	private List<FeeType> feeList;
 	
 	public String getConferenceName() {
 		return conferenceName;
@@ -55,12 +54,6 @@ public class NewConference {
 	}
 	public void setShortTalks(boolean shortTalks) {
 		this.shortTalks = shortTalks;
-	}
-	public List<FeeType> getFeeList() {
-		return feeList;
-	}
-	public void setFeeList(List<FeeType> feeList) {
-		this.feeList = feeList;
 	}
 	public String getAbstractStartDate() {
 		return abstractStartDate;

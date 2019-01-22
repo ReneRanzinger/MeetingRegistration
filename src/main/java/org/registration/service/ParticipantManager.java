@@ -3,6 +3,7 @@ package org.registration.service;
 import java.util.List;
 
 import org.registration.persistence.ConferenceEntity;
+import org.registration.persistence.FeeEntity;
 import org.registration.persistence.ParticipantEntity;
 
 public interface ParticipantManager {
@@ -12,4 +13,5 @@ public interface ParticipantManager {
 	void deleteParticipantById(Long participantId);
 	ParticipantEntity findByParticipantId(Long participantId);
 	ParticipantEntity findByParticipantIdAndEmail(Long participantId, String email);
+	List<ParticipantEntity> findAllParticipantsByFee(FeeEntity fe);
 }

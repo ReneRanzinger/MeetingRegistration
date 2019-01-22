@@ -13,7 +13,7 @@ public class ConferenceInformation {
 	private String registrationEnd;
 	private String abstractStart;
 	private String abstractEnd;
-	private List<FeeType> Fees;
+	private List<NewFee> Fees;
 	int statusCode;
 	
 	public ConferenceInformation(String conferenceCode) {
@@ -65,11 +65,11 @@ public class ConferenceInformation {
 		this.abstractEnd = abstractEnd;
 	}
 
-	public List<FeeType> getFees() {
+	public List<NewFee> getFees() {
 		return Fees;
 	}
 
-	public void setFees(List<FeeType> fees) {
+	public void setFees(List<NewFee> fees) {
 		Fees = fees;
 	}
 

@@ -12,5 +12,6 @@ public interface FeeRepository extends JpaRepository<FeeEntity, Long> {
 
 	public FeeEntity findByNameAndConferenceEntity(String name, ConferenceEntity conference);
 	public List<FeeEntity> findByConferenceEntity(ConferenceEntity conference);
+	public FeeEntity findByFeeId(Long feeId);
 }
 

@@ -18,7 +18,7 @@ import org.registration.service.FeeManager;
 import org.registration.view.ConferenceInformation;
 import org.registration.view.ConferenceNames;
 import org.registration.view.Confirmation;
-import org.registration.view.FeeType;
+import org.registration.view.NewFee;
 import org.registration.view.NewConference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,12 +57,12 @@ public class ConferenceController {
 		ci.setAbstractEnd(f.format(new Date(ce.getAbstractEnd().getTime())));
 		ci.setAbstractStart(f.format(new Date(ce.getAbstractStart().getTime())));
 		
-		List<FeeType> fees = new ArrayList<FeeType>();
+		List<NewFee> fees = new ArrayList<NewFee>();
 		
 		List<FeeEntity> feeEntities = feeManager.findByConferenceCode(conference_code);
 		
 		for (FeeEntity fe : feeEntities) {
-			FeeType temp = new FeeType(fe.getName(), fe.getAmount());
+			NewFee temp = new NewFee(fe.getName(), fe.getAmount());
 			fees.add(temp);
 		}
 		
@@ -148,14 +148,6 @@ public class ConferenceController {
 		
 		conferenceManager.createConference(ce);
 		
-		List<FeeType> fees = nc.getFeeList();
-		
-		for(FeeType f : fees) {
-			FeeEntity fe = new FeeEntity(f.getName(),f.getAmount());
-			fe.setConferenceEntity(ce);
-			feeManager.createFee(fe);
-		}
-		
 		return new Confirmation("New Conference Added", HttpStatus.CREATED.value());
 	}
 	
@@ -191,31 +183,13 @@ public class ConferenceController {
 		ce.setRegistrationEnd(java.sql.Timestamp.valueOf(nc.getRegistrationEndDate()));
 		ce.setAbstractStart(java.sql.Timestamp.valueOf(nc.getAbstractStartDate()));
 		ce.setAbstractEnd(java.sql.Timestamp.valueOf(nc.getAbstractEndDate()));
-		ce.setPostRegistrationCode(this.getNewConferenceCode());
 		ce.setEmailList(nc.getEmailList());
 		ce.setConfirmationEmail(nc.getConfirmationEmail());
 		ce.setShortTalks(nc.isShortTalks());
 		
 		conferenceManager.createConference(ce);
 		
-		List<FeeType> fees = nc.getFeeList();
-		
-		for(FeeType f : fees) {
-			
-			FeeEntity fe = feeManager.findByNameAndConferenceEntity(f.getName(), ce);
-			
-			if(fe != null) {
-				fe.setName(f.getName());
-				fe.setAmount(f.getAmount());
-				feeManager.createFee(fe);
-			} else {
-				fe = new FeeEntity(f.getName(),f.getAmount());
-				fe.setConferenceEntity(ce);
-				feeManager.createFee(fe);
-			}			 
-		}
-		
-		return new Confirmation("New Conference Added", HttpStatus.CREATED.value());	
+		return new Confirmation("Conference Updated", HttpStatus.CREATED.value());	
 	}
 	
 	

@@ -16,7 +16,7 @@ public class Participant {
 	private String phone;
 	private String profession;
 	private String promotionCode;
-	private FeeType fee;
+	private NewFee fee;
 	private String comment;
 	private String diet;
 	
@@ -92,10 +92,10 @@ public class Participant {
 	public void setPromotionCode(String promotionCode) {
 		this.promotionCode = promotionCode;
 	}
-	public FeeType getFee() {
+	public NewFee getFee() {
 		return fee;
 	}
-	public void setFee(FeeType fee) {
+	public void setFee(NewFee fee) {
 		this.fee = fee;
 	}
 	public String getComment() {

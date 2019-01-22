@@ -10,4 +10,6 @@ public interface FeeManager {
 	public void createFee(FeeEntity newFee);
 	public FeeEntity findByNameAndConferenceEntity(String name, ConferenceEntity conference);
 	public List<FeeEntity> findByConferenceCode(String conferenceCode);
+	public FeeEntity findByFeeId(Long feeId);
+	public void deleteById(Long feeId);
 }
