@@ -27,6 +27,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Registration Controller. REST controller to enable registration of participants
+ * for specific conferences. This controller is for client side applications, hence,
+ * Authorization is not required
+ * 
+ * @author vinamra
+ *
+ */
 @RestController
 @RequestMapping("/registration")
 public class RegistrationController {
@@ -49,11 +57,26 @@ public class RegistrationController {
 	@Autowired
 	PromoCodeRepository promoCodeRepository;
 	
+	/**
+	 * Web service to enable client/participant registrations. It receives
+	 * a new participant object, perform checks for validity of conference,
+	 * unique registrations and valid promo codes. If every thing is valid
+	 * it register the new participant into database and send the participant a
+	 * confirmation email.
+	 * 
+	 * Web service end point: /registration/register
+	 * 
+	 * Authorization: not required
+	 * @param Participant object
+	 * @return Confirmation Object
+	 * @throws EntityNotFoundException
+	 * @throws EntityExistsException
+	 * @throws MailSendException
+	 * @throws PromoCodeNotFoundException
+	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST, 
     		consumes={"application/xml", "application/json"})
 	public Confirmation register(@RequestBody(required=true) Participant p) {
-		
-			System.out.println(p);
 		
 			ParticipantEntity newParticipant = new ParticipantEntity(); 
 			ConferenceEntity ce = conferenceManager.findByConferenceCode(p.getConferenceCode());

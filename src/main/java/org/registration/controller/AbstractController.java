@@ -1,11 +1,6 @@
 package org.registration.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,28 +10,23 @@ import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.ParticipantEntity;
 import org.registration.service.ConferenceManager;
 import org.registration.service.ParticipantManager;
-import org.registration.view.AbstractDataWithFile;
 import org.registration.view.ConferenceInformation;
 import org.registration.view.Confirmation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 
- * 
+ * Abstract controller. This class includes RESTFUL web services to handle submission
+ * of abstract files for conferences by participants.
  * 
  * @author vinamra
- *
  */
 @RestController
 @RequestMapping("/abstract")
@@ -48,6 +38,24 @@ public class AbstractController {
 	@Autowired
 	ParticipantManager participantManager;
 	
+	/**
+	 * Web service to get information conference information with the status code,
+	 * showing status of the abstract submission schedule. If no conference exists
+	 * with given conference code, entity not found exception is thrown. 
+	 * 
+	 *  statusCode = -1 i.e. abstract submission for following conference is over.
+	 *  statusCode = 0	i.e. abstract submission for following conference is online.
+	 *  statusCode = 1	i.e. abstract submission for following conference is not started.
+	 *  
+	 *  Web service Endpoint: /abstract/info/{conference_code}
+	 *  
+	 *  Authentication : Not required
+	 *  
+	 * @param conference_code
+	 * @return ConferenceInformation class object.
+	 * @throws EntityNotFoundException
+	 * 
+	 */
 	@GetMapping(value = "/info/{conference_code}")
 	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code) {
 		
@@ -81,49 +89,46 @@ public class AbstractController {
 		
 	}
 	
-	@PostMapping(value = "/add")
-	public Confirmation addParticipantAbstract(@RequestParam MultipartFile abstractFile) {
+	/**
+	 * 
+	 * Web service to accept the multipart form-data and perform the validation 
+	 * for existing participant. If there exists a participant with given confirmation
+	 * number and email address then save the abstract file submitted with the form
+	 * data else throws an entity not found exception.
+	 * 
+	 * Web service Endpoint: /abstract/add}
+	 * 
+	 * Authentication : Not required
+	 * 
+	 * @param confirmationNumber
+	 * @param email
+	 * @param abstractTitle
+	 * @param file
+	 * @param considerTalk
+	 * @return Confirmation class object.
+	 * @throws IOException
+	 * @throws EntityNotFoundException
+	 */
+	@RequestMapping(value = "/add", method=RequestMethod.POST, consumes = {"multipart/form-data"})
+	public Confirmation addParticipantAbstract(@RequestPart("confirmationNumber") String confirmationNumber,
+			@RequestPart("email") String email,
+			@RequestPart("abstractTitle") String abstractTitle,
+			@RequestPart("file") MultipartFile file,
+			@RequestPart("considerTalk") String considerTalk) throws IOException {
 		
-//		ParticipantEntity pe = participantManager.findByParticipantIdAndEmail(data.getConfirmationNumber(), data.getEmail());
-//		
-//		if(pe == null) {
-//			throw new EntityNotFoundException();
-//		}
+		ParticipantEntity pe = participantManager.findByParticipantIdAndEmail(Long.parseLong(confirmationNumber), email);
 		
-		String result = null;
-        try {
-            result = this.saveUploadedFiles(abstractFile);
-
-           // result = this.saveUploadedFiles(data.getAbstractFile());
-        	System.out.println("File reached here" + result);
- 
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return new Confirmation("Abstract not added", HttpStatus.BAD_REQUEST.value());
-        }
+		if(pe == null) {
+			throw new EntityNotFoundException();
+		}
 		
+		pe.setAbstractTitle(abstractTitle);
+		pe.setAbstractFileName(file.getName());
+		pe.setAbstrct(file.getBytes());
+		
+		participantManager.createParticipant(pe);
 		
 		return new Confirmation("Abstract successfully added", HttpStatus.ACCEPTED.value());
 	}
 	
-	
-	private String saveUploadedFiles(MultipartFile file) throws IOException {
-		 String UPLOAD_DIR = "/Users/vinamra/Desktop/test";
-        // Make sure directory exists!
-        File uploadDir = new File(UPLOAD_DIR);
-        uploadDir.mkdirs();
- 
-        StringBuilder sb = new StringBuilder();
-            
-            String uploadFilePath = UPLOAD_DIR + "/" + file.getOriginalFilename();
- 
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(uploadFilePath);
-            Files.write(path, bytes);
- 
-            sb.append(uploadFilePath).append("<br/>");
-       
-        return sb.toString();
-    }
 }

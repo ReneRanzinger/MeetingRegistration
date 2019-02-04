@@ -18,6 +18,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Participant controller. REST Controller to view all the registered partcipants 
+ * for any conference and delete a participant if required.
+ * 
+ * @author vinamra
+ *
+ */
 @RestController
 @RequestMapping("/participant")
 public class ParticipantController {
@@ -28,6 +35,16 @@ public class ParticipantController {
 	@Autowired
 	ParticipantManager participantManager;
 	
+	/**
+	 * Web service to view all the registered participants for a conference.
+	 * 
+	 * Web service end point: /participant/allparticipants/{conferenceId}
+	 * 
+	 * Authorization: required
+	 * @param conferenceId
+	 * @return List of Participant entities as JSON object.
+	 * @throws EntityNotFoundException
+	 */
 	@GetMapping(value="/allparticipants/{conferenceId}")
 	public List<ParticipantEntity> getAllParticipants(@PathVariable Long conferenceId) {
 		
@@ -42,6 +59,17 @@ public class ParticipantController {
 		  return allParticipants;
 	}
 	
+	/**
+	 * Web service to delete a participant with unique participant Id.
+	 * 
+	 * Web service end point: /participant/delete/{participantId}
+	 * 
+	 * Authorization: required
+	 * 
+	 * @param participantId
+	 * @return Confirmation object
+	 * @throws EntityNotFoundException
+	 */
 	@DeleteMapping(value="/delete/{participantId}")
 	public Confirmation deleteParticipant(@PathVariable Long participantId) {
 		

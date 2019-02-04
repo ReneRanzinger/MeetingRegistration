@@ -19,6 +19,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Promo code controller. REST Controller to regulate adding, updating and deleting
+ * promo codes for existing conferences. Adding, updating and deleting a promo code
+ * requires a valid conference to be added and updated separately. A promo code can 
+ * only be added once conference is saved with unique Id.
+ * 
+ * @author vinamra
+ *
+ */
 @RestController
 @RequestMapping("/promo")
 public class PromoController {
@@ -32,6 +41,20 @@ public class PromoController {
 	@Autowired
 	ParticipantManager participantManager;
 
+	/**
+	 * Web service to add a new promo code entity for a conference. Prior to adding a
+	 * new promo code the conference must be successfully added and asigned a unique
+	 * conference Id.
+	 * 
+	 * Web service end point: /promo/addNew/{conferenceId}
+	 * 
+	 * Authorization: required
+	 * 
+	 * @param conferenceId
+	 * @param NewPromoCode object
+	 * @return Confirmation object
+	 * @throws EntityNotFoundException
+	 */
 	@PostMapping(value="/addNew/{conferenceId}")
 	public Confirmation addNewFee(@PathVariable Long conferenceId, @RequestBody(required=true) NewPromoCode newPromoCode) {
 		
@@ -48,6 +71,18 @@ public class PromoController {
 		return new Confirmation("New promo code added", HttpStatus.CREATED.value());
 	}
 	
+	/**
+	 * Web service to update an existing promo code entity. Each promo code
+	 * entity is updated separately and in isolation with conference update.
+	 * 
+	 * Web service end point: /promo/update/{promoId}
+	 * 
+	 * Authorization: required
+	 * @param promoId
+	 * @param NewPromoCode object
+	 * @return Confirmation object
+	 * @throws EntityNotFoundException
+	 */
 	@PutMapping(value="/update/{promoId}")
 	public Confirmation updateFee(@PathVariable Long promoId, @RequestBody(required=true) NewPromoCode newPromoCode) {
 		
@@ -64,6 +99,20 @@ public class PromoController {
 		return new Confirmation("Promo code Updated", HttpStatus.CREATED.value());
 	}
 	
+	/**
+	 * Web service to delete a promo code entity. Unlike Fee entity, promo code entity
+	 * does not require to check if any participant has registered with this promo
+	 * code or not because it does not violate any foreign ket consistency rules
+	 * of databse.
+	 * 
+	 * Web service end point: /promo/delete/{promoId}
+	 * 
+	 * Authorization: required
+	 * 
+	 * @param promoId
+	 * @return Confirmation object
+	 * @throws EntityNotFoundException
+	 */
 	@DeleteMapping(value="/delete/{promoId}")
 	public Confirmation deletefee(@PathVariable Long promoId) {
 		
