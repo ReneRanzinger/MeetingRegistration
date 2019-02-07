@@ -71,6 +71,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter  {
         config.addAllowedHeader("*");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
         source.registerCorsConfiguration("/**",config );
         return source;
     }
