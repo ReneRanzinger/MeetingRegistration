@@ -9,6 +9,7 @@ import org.registration.persistence.ParticipantEntity;
 import org.registration.service.ConferenceManager;
 import org.registration.service.ParticipantManager;
 import org.registration.view.Confirmation;
+import org.registration.view.ParticipantsExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Participant controller. REST Controller to view all the registered partcipants 
@@ -82,6 +84,28 @@ public class ParticipantController {
 		participantManager.deleteParticipantById(participantId);
 		
 		return new Confirmation("Participant Deleted Successfully", HttpStatus.OK.value());
+	}
+	
+	/**
+	 * 
+	 * Webservice t download all the participants for a conference into microsoft excel
+	 * file and save it to local mac or pc.
+	 * 
+	 * Web service Endpoint: /participant/download/{conference_code}
+	 * 
+	 * Authentication : Required
+	 * 
+	 * @param conference_code
+	 * @return ModelAndView object.
+	 */
+	@GetMapping(value="/download/{conference_code}")
+	public ModelAndView getParticipantExcelList(@PathVariable String conference_code) {
+		
+		ConferenceEntity ce = conferenceManager.findByConferenceCode(conference_code);
+		
+		List<ParticipantEntity> participants = participantManager.findAllParticipantsByConference(ce);
+		
+		return new ModelAndView(new ParticipantsExcelView(), "participants", participants);
 	}
 		
 }
