@@ -181,9 +181,9 @@ public class ConferenceController {
 	 * @param conferenceId
 	 * @return Confirmation class object
 	 */
-	@PutMapping(value="/update/{conference_Id}")
-	public Confirmation updateConferenceInfo(@RequestBody(required=true) NewConference nc, 
-												@PathVariable Long conferenceId) {
+	@PutMapping(value="/update/{conferenceId}")
+	public Confirmation updateConferenceInfo(@PathVariable Long conferenceId,
+			@RequestBody(required=true) NewConference nc) {
 		
 		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		

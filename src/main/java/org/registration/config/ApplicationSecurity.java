@@ -148,7 +148,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter  {
 		
 		RequestMatcher PUBLIC_URLS = new OrRequestMatcher( 
 				new AntPathRequestMatcher("/error"),
-				new AntPathRequestMatcher("/conference/info/**"),
+//				new AntPathRequestMatcher("/conference/info/**"),
 //				new AntPathRequestMatcher("/conference/**"),
 //				new AntPathRequestMatcher("/participant/**"),
 				new AntPathRequestMatcher("/registration/**"),

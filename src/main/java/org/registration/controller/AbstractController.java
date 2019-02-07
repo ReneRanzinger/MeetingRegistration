@@ -96,7 +96,7 @@ public class AbstractController {
 	 * number and email address then save the abstract file submitted with the form
 	 * data else throws an entity not found exception.
 	 * 
-	 * Web service Endpoint: /abstract/add}
+	 * Web service Endpoint: /abstract/add
 	 * 
 	 * Authentication : Not required
 	 * 
