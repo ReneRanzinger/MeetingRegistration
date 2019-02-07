@@ -38,14 +38,14 @@ public class ParticipantController {
 	/**
 	 * Web service to view all the registered participants for a conference.
 	 * 
-	 * Web service end point: /participant/allparticipants/{conferenceId}
+	 * Web service end point: /participant/allParticipants/{conferenceId}
 	 * 
 	 * Authorization: required
 	 * @param conferenceId
 	 * @return List of Participant entities as JSON object.
 	 * @throws EntityNotFoundException
 	 */
-	@GetMapping(value="/allparticipants/{conferenceId}")
+	@GetMapping(value="/allParticipants/{conferenceId}")
 	public List<ParticipantEntity> getAllParticipants(@PathVariable Long conferenceId) {
 		
 		  ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);

@@ -43,7 +43,7 @@ public class PromoController {
 
 	/**
 	 * Web service to add a new promo code entity for a conference. Prior to adding a
-	 * new promo code the conference must be successfully added and asigned a unique
+	 * new promo code the conference must be successfully added and assigned a unique
 	 * conference Id.
 	 * 
 	 * Web service end point: /promo/addNew/{conferenceId}
@@ -105,7 +105,7 @@ public class PromoController {
 	 * code or not because it does not violate any foreign ket consistency rules
 	 * of databse.
 	 * 
-	 * Web service end point: /promo/delete/{promoId}
+	 * Web service end point: /promo/delete/{promoCodeId}
 	 * 
 	 * Authorization: required
 	 * 
@@ -113,7 +113,7 @@ public class PromoController {
 	 * @return Confirmation object
 	 * @throws EntityNotFoundException
 	 */
-	@DeleteMapping(value="/delete/{promoId}")
+	@DeleteMapping(value="/delete/{promoCodeId}")
 	public Confirmation deletefee(@PathVariable Long promoId) {
 		
 		PromotionCodeEntity pce = promoManager.findByPromoId(promoId);
