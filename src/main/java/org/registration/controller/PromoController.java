@@ -61,7 +61,7 @@ public class PromoController {
 		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		
 		if(ce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Conference Not Found. Please use the correct conference Id.");
 		}
 		
 		PromotionCodeEntity pce = new PromotionCodeEntity(newPromoCode.getCode(), newPromoCode.getDescription());
@@ -89,7 +89,7 @@ public class PromoController {
 		PromotionCodeEntity pce = promoManager.findByPromoId(promoId);
 		
 		if(pce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Promo code entity Not Found. Please use the correct promo code Id.");
 		}
 		
 		pce.setCode(newPromoCode.getCode());
@@ -119,7 +119,7 @@ public class PromoController {
 		PromotionCodeEntity pce = promoManager.findByPromoId(promoId);
 		
 		if(pce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Promo code entity Not Found. Please use the correct promo code Id.");
 		}
 			
 		promoManager.deleteById(pce.getPromotionCodeId());

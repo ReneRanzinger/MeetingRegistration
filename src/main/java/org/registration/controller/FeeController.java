@@ -66,7 +66,7 @@ public class FeeController {
 		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		
 		if(ce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Conference Not Found. Please use the correct conference Id.");
 		}
 		
 		FeeEntity fe = new FeeEntity(f.getName(),f.getAmount());
@@ -96,7 +96,7 @@ public class FeeController {
 		FeeEntity fe = feeManager.findByFeeId(feeId);
 		
 		if(fe == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Fee entity Not Found. Please use the correct fee Id.");
 		}
 		
 		fe.setAmount(f.getAmount());
@@ -124,7 +124,7 @@ public class FeeController {
 		FeeEntity fe = feeManager.findByFeeId(feeId);
 		
 		if(fe == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Fee entity Not Found. Please use the correct fee Id.");
 		}
 		
 		List<ParticipantEntity> allParticipants = participantManager.findAllParticipantsByFee(fe);

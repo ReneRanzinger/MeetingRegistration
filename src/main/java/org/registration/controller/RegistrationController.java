@@ -92,7 +92,7 @@ public class RegistrationController {
 		ConferenceEntity ce = conferenceManager.findByConferenceCode(conference_code);
 		
 		if(ce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Conference Not Found. Please use the correct conference code.");
 		}
 		
 		ConferenceInformation ci = new ConferenceInformation(conference_code);
@@ -159,7 +159,7 @@ public class RegistrationController {
 			ConferenceEntity ce = conferenceManager.findByConferenceCode(p.getConferenceCode());
 			
 			if(ce == null) {
-				throw new EntityNotFoundException();
+				throw new EntityNotFoundException("Conference Not Found. Please use the correct conference code.");
 			}
 			
 			newParticipant.setConference(ce);
@@ -206,7 +206,9 @@ public class RegistrationController {
 			try {
 	        	confirmationText = emailManager.sendConfirmationEmail(newParticipant);
 	        } catch (MailSendException e) {
-	        	throw e;
+	        	return new Confirmation("Thank you for registering. Could not send"
+	        			+ "a confirmation email at the moment."
+	        			+ "Please contact the organizers if you have any further questions.", HttpStatus.CREATED.value());
 	        }
 			
 			return new Confirmation(confirmationText, HttpStatus.CREATED.value());			

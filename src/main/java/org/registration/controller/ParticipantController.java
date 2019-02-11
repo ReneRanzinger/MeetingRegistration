@@ -58,7 +58,7 @@ public class ParticipantController {
 		  ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		  
 		  if(ce == null) {
-				throw new EntityNotFoundException();
+				throw new EntityNotFoundException("Conference Not Found. Please use the correct conference Id.");
 			}
 		  
 		  List<ParticipantEntity> allParticipants = participantManager.findAllParticipantsByConference(ce);
@@ -83,7 +83,7 @@ public class ParticipantController {
 		ParticipantEntity pe = participantManager.findByParticipantId(participantId);
 		
 		 if(pe == null) {
-				throw new EntityNotFoundException();
+				throw new EntityNotFoundException("Participant Not Found. Please use the correct participant Id.");
 			}
 		
 		participantManager.deleteParticipantById(participantId);
@@ -130,7 +130,7 @@ public class ParticipantController {
 		ParticipantEntity pe = participantManager.findByParticipantId(participantId);
 		
 		if(pe == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Participant Not Found. Please use the correct participant Id.");
 		}
 		
 		return ResponseEntity.ok()

@@ -69,7 +69,7 @@ public class AbstractController {
 		ConferenceEntity ce = conferenceManager.findByConferenceCode(conference_code);
 		
 		if(ce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Conference Not Found. Please use the correct conference code.");
 		}
 		
 		ConferenceInformation ci = new ConferenceInformation(conference_code);
@@ -130,7 +130,8 @@ public class AbstractController {
 		ParticipantEntity pe = participantManager.findByParticipantIdAndEmail(Long.parseLong(confirmationNumber.trim()), email.trim());
 		
 		if(pe == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Registration not found. Please use the correct confirmation number and "
+					+ "same email that was used during registration.");
 		}
 		
 		pe.setAbstractTitle(abstractTitle);
@@ -139,7 +140,8 @@ public class AbstractController {
 		pe.setConsiderTalk(Boolean.parseBoolean(considerTalk));
 		participantManager.createParticipant(pe);
 		
-		return new Confirmation("Abstract successfully added", HttpStatus.ACCEPTED.value());
+		return new Confirmation("Abstract successfully added. Please contact"
+				+ "the organizers for further questions.", HttpStatus.ACCEPTED.value());
 	}
 	
 }

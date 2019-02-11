@@ -100,7 +100,7 @@ public class ConferenceController {
 		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		
 		if(ce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Conference Not Found. Please use the correct conference Id.");
 		}
 		
 		return ce;	
@@ -188,7 +188,7 @@ public class ConferenceController {
 		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		
 		if(ce == null) {
-			throw new EntityNotFoundException();
+			throw new EntityNotFoundException("Conference Not Found. Please use the correct conference Id.");
 		}
 		
 		ce.setConferenceName(nc.getConferenceName());
