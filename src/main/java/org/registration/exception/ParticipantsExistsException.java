@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @SuppressWarnings("serial")
-@ResponseStatus(value=HttpStatus.CONFLICT, reason="Atleast one participant already registered with this fee")  // 409
+@ResponseStatus(value=HttpStatus.CONFLICT)  // 409
 public class ParticipantsExistsException extends RuntimeException {
 
 	public ParticipantsExistsException() { super(); }
