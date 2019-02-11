@@ -129,8 +129,8 @@ public class FeeController {
 		
 		List<ParticipantEntity> allParticipants = participantManager.findAllParticipantsByFee(fe);
 		
-		if(allParticipants != null) {
-			throw new ParticipantsExistsException("Cannot delte this fee. Atleast one participant already registered with this fee");
+		if(allParticipants.size() != 0) {
+			throw new ParticipantsExistsException("Cannot delete this fee. Atleast one participant already registered with this fee");
 		}
 		
 		feeManager.deleteById(fe.getFeeId());

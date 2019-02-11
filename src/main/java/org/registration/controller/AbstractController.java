@@ -1,8 +1,10 @@
 package org.registration.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -13,7 +15,12 @@ import org.registration.service.ParticipantManager;
 import org.registration.view.ConferenceInformation;
 import org.registration.view.Confirmation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +63,8 @@ public class AbstractController {
 	 * @throws EntityNotFoundException
 	 * 
 	 */
-	@GetMapping(value = "/info/{conference_code}")
-	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code) {
+	@GetMapping(value = {"/info/{conference_code}","/info/{conference_code}/{post_reg_code}"})
+	public ConferenceInformation getConferenceInfo(@PathVariable String conference_code, @PathVariable Optional<String> post_reg_code) {
 		
 		ConferenceEntity ce = conferenceManager.findByConferenceCode(conference_code);
 		
@@ -74,15 +81,19 @@ public class AbstractController {
 		ci.setAbstractStart(f.format(new Date(ce.getAbstractStart().getTime())));
 		
 		int statusCode = 0;
-//		
-//		if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractStart()) < 0) {
-//			statusCode=1;
-//		} else if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractEnd()) > 0) {
-//			statusCode=-1;
-//		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractStart()) >= 0 && new Date().compareTo(ce.getAbstractEnd()) <= 0) {
-//			statusCode=0;
-//		}
-//		
+		
+		if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractStart()) < 0) {
+			statusCode=1;
+		} else if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractEnd()) > 0) {
+			statusCode=-1;
+		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractStart()) >= 0 && new Date().compareTo(ce.getAbstractEnd()) <= 0) {
+			statusCode=0;
+		}
+		
+		if(post_reg_code.isPresent() && post_reg_code.get().equals(ce.getPostRegistrationCode())) {
+			statusCode=0;
+		}
+		
 		ci.setStatusCode(statusCode);
 		
 		return ci;
@@ -116,16 +127,16 @@ public class AbstractController {
 			@RequestPart("file") MultipartFile file,
 			@RequestPart("considerTalk") String considerTalk) throws IOException {
 		
-		ParticipantEntity pe = participantManager.findByParticipantIdAndEmail(Long.parseLong(confirmationNumber), email);
+		ParticipantEntity pe = participantManager.findByParticipantIdAndEmail(Long.parseLong(confirmationNumber.trim()), email.trim());
 		
 		if(pe == null) {
 			throw new EntityNotFoundException();
 		}
 		
 		pe.setAbstractTitle(abstractTitle);
-		pe.setAbstractFileName(file.getName());
+		pe.setAbstractFileName(file.getContentType()); 
 		pe.setAbstrct(file.getBytes());
-		
+		pe.setConsiderTalk(Boolean.parseBoolean(considerTalk));
 		participantManager.createParticipant(pe);
 		
 		return new Confirmation("Abstract successfully added", HttpStatus.ACCEPTED.value());

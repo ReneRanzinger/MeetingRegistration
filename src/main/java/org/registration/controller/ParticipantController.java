@@ -11,7 +11,12 @@ import org.registration.service.ParticipantManager;
 import org.registration.view.Confirmation;
 import org.registration.view.ParticipantsExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -88,7 +93,7 @@ public class ParticipantController {
 	
 	/**
 	 * 
-	 * Webservice t download all the participants for a conference into microsoft excel
+	 * Webservice to download all the participants for a conference into microsoft excel
 	 * file and save it to local mac or pc.
 	 * 
 	 * Web service Endpoint: /participant/download/{conference_code}
@@ -108,4 +113,29 @@ public class ParticipantController {
 		return new ModelAndView(new ParticipantsExcelView(), "participants", participants);
 	}
 		
+	/**
+	 * Web service to download the abstract for a participants.
+	 * 
+	 * Endpoint: /participant/downloadAbstract/{participantId}
+	 * 
+	 * Authorization: required
+	 * 
+	 * @param participantId
+	 * @return ResponseEntity with status ok and attachment of the Abstract file.
+	 * @throws EntityNotFoundException
+	 */
+	@GetMapping(value="/downloadAbstract/{participantId}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable Long participantId) {
+		
+		ParticipantEntity pe = participantManager.findByParticipantId(participantId);
+		
+		if(pe == null) {
+			throw new EntityNotFoundException();
+		}
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.parseMediaType(pe.getAbstractFileName()))
+						.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"abstract_"+pe.getParticipantId()+"\"")
+						.body(new ByteArrayResource(pe.getAbstrct()));
+	}
 }
