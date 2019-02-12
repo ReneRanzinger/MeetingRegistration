@@ -134,8 +134,8 @@ public class ParticipantController {
 		}
 		
 		return ResponseEntity.ok()
-				.contentType(MediaType.parseMediaType(pe.getAbstractFileName()))
-						.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"abstract_"+pe.getParticipantId()+"\"")
+				.contentType(MediaType.parseMediaType(pe.getAbstractFileType()))
+						.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"abstract_"+pe.getFirstName()+pe.getLastName()+"("+pe.getParticipantId()+")\"")
 						.body(new ByteArrayResource(pe.getAbstrct()));
 	}
 }

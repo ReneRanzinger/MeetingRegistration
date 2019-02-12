@@ -87,7 +87,7 @@ public class ParticipantEntity {
 	private String diet;
 	
 	@Column(name="abstract_filename")
-	private String abstractFileName;
+	private String abstractFileType;
 	
 	@Column(name="consider_talk")
 	private boolean considerTalk;
@@ -118,7 +118,7 @@ public class ParticipantEntity {
 		this.abstractTitle = abstractTitle;
 		this.abstrct = abstrct;
 		this.diet = diet;
-		this.abstractFileName = abstract_fileName;
+		this.abstractFileType = abstract_fileName;
 		this.considerTalk = considerTalk;
 	}
 
@@ -290,12 +290,12 @@ public class ParticipantEntity {
 		this.fee = fee;
 	}
 
-	public String getAbstractFileName() {
-		return abstractFileName;
+	public String getAbstractFileType() {
+		return abstractFileType;
 	}
 
-	public void setAbstractFileName(String abstractFileName) {
-		this.abstractFileName = abstractFileName;
+	public void setAbstractFileType(String abstractFileType) {
+		this.abstractFileType = abstractFileType;
 	}
 	
 	

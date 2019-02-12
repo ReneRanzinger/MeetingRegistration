@@ -113,7 +113,7 @@ public class PromoController {
 	 * @return Confirmation object
 	 * @throws EntityNotFoundException
 	 */
-	@DeleteMapping(value="/delete/{promoCodeId}")
+	@DeleteMapping(value="/delete/{promoId}")
 	public Confirmation deletefee(@PathVariable Long promoId) {
 		
 		PromotionCodeEntity pce = promoManager.findByPromoId(promoId);
