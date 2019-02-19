@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -64,6 +65,35 @@ public class ParticipantController {
 		  List<ParticipantEntity> allParticipants = participantManager.findAllParticipantsByConference(ce);
 		
 		  return allParticipants;
+	}
+	
+	/**
+	 * Web service to update fees payed or not by a a participant with unique 
+	 * participant Id.
+	 * 
+	 * Web service end point: /participant/update/{participantId}
+	 * 
+	 * Authorization: required
+	 * 
+	 * @param participantId
+	 * @return Confirmation object
+	 * @throws EntityNotFoundException
+	 */
+	@PutMapping(value="/update/{participantId}")
+	public Confirmation updateParticipant(@PathVariable Long participantId, 
+			@RequestBody(required=true) String status ) {
+		
+		ParticipantEntity pe = participantManager.findByParticipantId(participantId);
+		
+		 if(pe == null) {
+				throw new EntityNotFoundException("Participant Not Found. Please use the correct participant Id.");
+			}
+		
+		pe.setPayed(Boolean.parseBoolean(status.toLowerCase().trim()));
+		
+		participantManager.createParticipant(pe);
+		
+		return new Confirmation("Participant Updated Successfully", HttpStatus.OK.value());
 	}
 	
 	/**
