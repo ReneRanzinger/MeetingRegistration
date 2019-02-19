@@ -135,6 +135,7 @@ public class AbstractController {
 		}
 		
 		pe.setAbstractTitle(abstractTitle);
+		pe.setAbstractFileName(file.getOriginalFilename());
 		pe.setAbstractFileType(file.getContentType()); 
 		pe.setAbstrct(file.getBytes());
 		pe.setConsiderTalk(Boolean.parseBoolean(considerTalk));

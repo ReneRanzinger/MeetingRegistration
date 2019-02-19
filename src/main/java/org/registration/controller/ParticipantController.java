@@ -103,10 +103,10 @@ public class ParticipantController {
 	 * @param conference_code
 	 * @return ModelAndView object.
 	 */
-	@GetMapping(value="/download/{conference_code}")
-	public ModelAndView getParticipantExcelList(@PathVariable String conference_code) {
+	@GetMapping(value="/download/{conferenceId}")
+	public ModelAndView getParticipantExcelList(@PathVariable Long conferenceId) {
 		
-		ConferenceEntity ce = conferenceManager.findByConferenceCode(conference_code);
+		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		
 		List<ParticipantEntity> participants = participantManager.findAllParticipantsByConference(ce);
 		

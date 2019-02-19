@@ -2,7 +2,7 @@ CREATE SCHEMA IF NOT EXISTS registration AUTHORIZATION registration;
 
 CREATE SEQUENCE IF NOT EXISTS conference_seq MINVALUE 1 START 1;
 CREATE SEQUENCE IF NOT EXISTS fee_seq MINVALUE 1 START 1;
-CREATE SEQUENCE IF NOT EXISTS participant_seq MINVALUE 550011 START 550011;
+CREATE SEQUENCE IF NOT EXISTS participant_seq2 MINVALUE 550031 START 550031;
 CREATE SEQUENCE IF NOT EXISTS promotion_code_seq MINVALUE 1 START 1;
 
 CREATE TABLE IF NOT EXISTS registration.conference (
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS registration.fee (
 );
 
 CREATE TABLE IF NOT EXISTS registration.participant (
-  participant_id bigint DEFAULT nextval('participant_seq') NOT NULL PRIMARY KEY,
+  participant_id bigint DEFAULT nextval('participant_seq2') NOT NULL PRIMARY KEY,
   conference_id bigint NOT NULL REFERENCES registration.conference(conference_id),
   title varchar(128) NOT NULL,
   first_name varchar(128) NOT NULL,
@@ -49,10 +49,10 @@ CREATE TABLE IF NOT EXISTS registration.participant (
   abstract_title varchar(1024),
   abstract bytea,
   abstract_filename varchar(10000),
+  abstract_filetype varchar (1024),
   consider_talk boolean,
   UNIQUE (email,conference_id)
 );  
-
 
 CREATE TABLE IF NOT EXISTS registration.promotion_code (
   promotion_code_id bigint DEFAULT nextval('promotion_code_seq') NOT NULL PRIMARY KEY,

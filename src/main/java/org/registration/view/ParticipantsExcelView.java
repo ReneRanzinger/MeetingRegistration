@@ -75,7 +75,7 @@ public class ParticipantsExcelView extends AbstractXlsView{
 	    	row.createCell(13).setCellValue(p.isPayed());
 	    	row.createCell(14).setCellValue(p.getPromotionCode());
 	    	row.createCell(17).setCellValue(p.getAbstractTitle());
-	    	row.createCell(18).setCellValue(p.getAbstractFileType());
+	    	row.createCell(18).setCellValue(p.getAbstractFileName());
 	    	row.createCell(19).setCellValue(p.isConsiderTalk());
 	    }   
 	}

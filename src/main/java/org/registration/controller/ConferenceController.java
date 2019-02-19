@@ -131,14 +131,14 @@ public class ConferenceController {
 		ce = new ConferenceEntity();
 		
 		ce.setConferenceCode(newConferenceCode);		
-		ce.setConferenceName(nc.getConferenceName());
+		ce.setConferenceName(nc.getConferenceName().trim());
 		ce.setRegistrationStart(java.sql.Timestamp.valueOf(nc.getRegistrationStartDate()));
 		ce.setRegistrationEnd(java.sql.Timestamp.valueOf(nc.getRegistrationEndDate()));
 		ce.setAbstractStart(java.sql.Timestamp.valueOf(nc.getAbstractStartDate()));
 		ce.setAbstractEnd(java.sql.Timestamp.valueOf(nc.getAbstractEndDate()));
 		ce.setPostRegistrationCode(this.getNewConferenceCode());
-		ce.setEmailList(nc.getEmailList());
-		ce.setConfirmationEmail(nc.getConfirmationEmail());
+		ce.setEmailList(nc.getEmailList().trim());
+		ce.setConfirmationEmail(nc.getConfirmationEmail().trim());
 		ce.setShortTalks(nc.isShortTalks());
 		
 		conferenceManager.createConference(ce);

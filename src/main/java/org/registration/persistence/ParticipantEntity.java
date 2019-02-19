@@ -23,7 +23,7 @@ public class ParticipantEntity {
 	@Id
     @Column(name="participant_id", unique = true, nullable = false)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seq3")
-    @SequenceGenerator(name="seq3", sequenceName="participant_seq", initialValue=550011, allocationSize=1)
+    @SequenceGenerator(name="seq3", sequenceName="participant_seq2", initialValue=550031, allocationSize=1)
 	private Long participantId;
 	
 	@JsonIgnore
@@ -80,6 +80,7 @@ public class ParticipantEntity {
 	@Column(name="abstract_title")
 	private String abstractTitle;
 	
+	@JsonIgnore
 	@Column(name="abstract")
 	private byte[] abstrct;
 	
@@ -87,6 +88,9 @@ public class ParticipantEntity {
 	private String diet;
 	
 	@Column(name="abstract_filename")
+	private String abstractFileName;
+	
+	@Column(name="abstract_filetype")
 	private String abstractFileType;
 	
 	@Column(name="consider_talk")
@@ -288,6 +292,14 @@ public class ParticipantEntity {
 
 	public void setFee(FeeEntity fee) {
 		this.fee = fee;
+	}
+	
+	public String getAbstractFileName() {
+		return abstractFileName;
+	}
+
+	public void setAbstractFileName(String abstractFileName) {
+		this.abstractFileName = abstractFileName;
 	}
 
 	public String getAbstractFileType() {
