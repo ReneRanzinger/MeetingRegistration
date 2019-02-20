@@ -12,6 +12,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.registration.exception.EmailExistsException;
 import org.registration.exception.PromoCodeNotFoundException;
+import org.registration.exception.RegistrationTimeOutException;
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.FeeEntity;
 import org.registration.persistence.ParticipantEntity;
@@ -120,7 +121,7 @@ public class RegistrationController {
 			statusCode=1;
 		} else if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationEnd()) > 0) {
 			statusCode=-1;
-		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationStart()) >= 0 && new Date().compareTo(ce.getRegistrationEnd()) <= 0) {
+		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationStart()) >= 0 && new Timestamp(System.currentTimeMillis()).compareTo(ce.getRegistrationEnd()) <= 0) {
 			statusCode=0;
 		}
 		
@@ -201,7 +202,11 @@ public class RegistrationController {
 					throw new PromoCodeNotFoundException(p.getPromotionCode().trim()+" is not valid promo code for this meeting");
 				}
 			}
+			if(new Timestamp(System.currentTimeMillis()).compareTo(conferenceManager.findByConferenceCode(p.getConferenceCode()).getRegistrationEnd()) <= 0) {
 			participantManager.createParticipant(newParticipant);
+			}else {
+				throw new RegistrationTimeOutException("Registration has ended. Contact organizers");
+			}
         	String confirmationText;
 			try {
 	        	confirmationText = emailManager.sendConfirmationEmail(newParticipant);
