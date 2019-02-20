@@ -21,10 +21,15 @@ public class ParticipantsExcelView extends AbstractXlsView{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		
-		response.setHeader("Content-Disposition", "attachment; filename=\"SFG-satellite-participants.xls\"");
-
-	    @SuppressWarnings("unchecked")
-	    List<ParticipantEntity> participants= (List<ParticipantEntity>) model.get("participants");
+		 @SuppressWarnings("unchecked")
+		 List<ParticipantEntity> participants= (List<ParticipantEntity>) model.get("participants");
+		
+		 String fileName="";
+		 if(!participants.isEmpty()) {
+		 fileName = participants.get(0).getConference().getConferenceName();
+		 }
+		 
+		response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"-participants.xls\"");
 
 	    Sheet sheet = workbook.createSheet("Participants");
 	    

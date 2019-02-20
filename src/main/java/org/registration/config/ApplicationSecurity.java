@@ -151,6 +151,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter  {
 //				new AntPathRequestMatcher("/participant/**"),
 				new AntPathRequestMatcher("/registration/**"),
 				new AntPathRequestMatcher("/abstract/**"),
+				new AntPathRequestMatcher("/participant/download/**"),
 				new AntPathRequestMatcher("/login**"));
 		
 		final RequestMatcher PROTECTED_URLS = new NegatedRequestMatcher(PUBLIC_URLS);
