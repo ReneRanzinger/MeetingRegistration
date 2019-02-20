@@ -202,11 +202,7 @@ public class RegistrationController {
 					throw new PromoCodeNotFoundException(p.getPromotionCode().trim()+" is not valid promo code for this meeting");
 				}
 			}
-			if(new Timestamp(System.currentTimeMillis()).compareTo(conferenceManager.findByConferenceCode(p.getConferenceCode()).getRegistrationEnd()) <= 0) {
 			participantManager.createParticipant(newParticipant);
-			}else {
-				throw new RegistrationTimeOutException("Registration has ended. Contact organizers");
-			}
         	String confirmationText;
 			try {
 	        	confirmationText = emailManager.sendConfirmationEmail(newParticipant);
