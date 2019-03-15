@@ -1,9 +1,21 @@
 package org.registration.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.util.IOUtils;
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.ParticipantEntity;
 import org.registration.service.ConferenceManager;
@@ -138,6 +150,10 @@ public class ParticipantController {
 		
 		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
 		
+		 if(ce == null) {
+				throw new EntityNotFoundException("Conference Not Found. Please use the correct conference Id.");
+		}
+		 
 		List<ParticipantEntity> participants = participantManager.findAllParticipantsByConference(ce);
 		
 		return new ModelAndView(new ParticipantsExcelView(), "participants", participants);
@@ -167,5 +183,51 @@ public class ParticipantController {
 				.contentType(MediaType.parseMediaType(pe.getAbstractFileType()))
 						.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"abstract_"+pe.getFirstName()+pe.getLastName()+"("+pe.getParticipantId()+")\"")
 						.body(new ByteArrayResource(pe.getAbstrct()));
+	}
+	
+	/**
+	 * Web service to download all participant's abstracts as a zip file for a given 
+	 * conference.
+	 * 
+	 * Endpoint: /participant/downloadAllAbstracts/{conferenceId}
+	 * 
+	 * Authorization: required
+	 * 
+	 * @param conferenceId
+	 * @return ResponseEntity with status ok and attachment of a zip file.
+	 * @throws IOException 
+	 * @throws EntityNotFoundException
+	 */
+	@GetMapping(value="/downloadAllAbstracts/{conferenceId}", produces="application/zip")
+	public ResponseEntity<Resource> downloadAllAbstracts(@PathVariable Long conferenceId) throws IOException{
+
+		ConferenceEntity ce = conferenceManager.findByConferenceId(conferenceId);
+		 
+		if(ce == null) {
+			throw new EntityNotFoundException("Conference Not Found. Please use the correct conference Id.");
+		}
+	  
+	  List<ParticipantEntity> allParticipants = participantManager.findAllParticipantsByConference(ce);
+	  	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    ZipOutputStream zos = new ZipOutputStream(baos);
+		for(ParticipantEntity pe : allParticipants) {
+			if(pe.getAbstrct()!=null) {
+				ZipEntry entry = new ZipEntry(pe.getAbstractFileName());
+			    entry.setSize(pe.getAbstrct().length);
+			    zos.putNextEntry(entry);
+//			    ByteArrayInputStream bios = new ByteArrayInputStream(pe.getAbstrct());
+//			   
+//			    IOUtils.copy(bios, zos);
+			    zos.write(pe.getAbstrct());
+			    zos.closeEntry();
+			}
+		}
+		zos.flush();
+		zos.close();
+	
+	return ResponseEntity.ok()
+			.contentType(MediaType.parseMediaType("application/zip"))
+			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"test\"")
+			.body(new ByteArrayResource(baos.toByteArray()));
 	}
 }

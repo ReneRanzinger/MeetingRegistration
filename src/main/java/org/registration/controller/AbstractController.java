@@ -86,7 +86,7 @@ public class AbstractController {
 			statusCode=1;
 		} else if(new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractEnd()) > 0) {
 			statusCode=-1;
-		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractStart()) >= 0 && new Date().compareTo(ce.getAbstractEnd()) <= 0) {
+		} else if (new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractStart()) >= 0 && new Timestamp(System.currentTimeMillis()).compareTo(ce.getAbstractEnd()) <= 0) {
 			statusCode=0;
 		}
 		
