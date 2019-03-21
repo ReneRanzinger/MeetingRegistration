@@ -7,6 +7,8 @@ import org.apache.commons.lang3.text.StrSubstitutor;
 import org.registration.persistence.ConfigurationEntity;
 import org.registration.persistence.ParticipantEntity;
 import org.registration.persistence.dao.ConfigurationRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailManageImpl implements EmailManager {
+	
+	Logger logger = LoggerFactory.getLogger(EmailManageImpl.class);
 
 	@Autowired
 	ConfigurationRepository configRepository;
@@ -68,8 +72,9 @@ public class EmailManageImpl implements EmailManager {
         message.setFrom(this.username);
         try {
         	mailSender.send(message);
-        return updatedEmail;
+        	return updatedEmail;
         } catch (Exception e) {
+        	logger.error("Error sending email", e);
 			return updatedEmail;
 		}
 	}
