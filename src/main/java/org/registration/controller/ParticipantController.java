@@ -212,7 +212,7 @@ public class ParticipantController {
 	    ZipOutputStream zos = new ZipOutputStream(baos);
 		for(ParticipantEntity pe : allParticipants) {
 			if(pe.getAbstrct()!=null) {
-				ZipEntry entry = new ZipEntry(pe.getAbstractFileName());
+				ZipEntry entry = new ZipEntry("abstract_("+pe.getParticipantId()+")"+pe.getAbstractFileName());
 			    entry.setSize(pe.getAbstrct().length);
 			    zos.putNextEntry(entry);
 //			    ByteArrayInputStream bios = new ByteArrayInputStream(pe.getAbstrct());

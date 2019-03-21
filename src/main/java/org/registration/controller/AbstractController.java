@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.registration.persistence.ConferenceEntity;
 import org.registration.persistence.ParticipantEntity;
 import org.registration.service.ConferenceManager;
@@ -135,7 +136,7 @@ public class AbstractController {
 		}
 		
 		pe.setAbstractTitle(abstractTitle);
-		pe.setAbstractFileName(file.getOriginalFilename());
+		pe.setAbstractFileName(file.getOriginalFilename()+"."+FilenameUtils.getExtension(file.getOriginalFilename()));
 		pe.setAbstractFileType(file.getContentType()); 
 		pe.setAbstrct(file.getBytes());
 		pe.setConsiderTalk(Boolean.parseBoolean(considerTalk));
