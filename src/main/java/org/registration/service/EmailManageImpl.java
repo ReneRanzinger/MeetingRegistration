@@ -15,7 +15,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
-@Service
+//@Service
 public class EmailManageImpl implements EmailManager {
 	
 	Logger logger = LoggerFactory.getLogger(EmailManageImpl.class);
